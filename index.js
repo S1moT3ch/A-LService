@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
+const path = require('path')
 //const DbConnection = require('./app/config/db-connection');
 const checkUserLogin = require('./app/middleware/check-user-login');
 
@@ -21,6 +22,7 @@ app.listen(port, () => {console.log('Server in ascolto alla porta ' + port)})
 
 app.set('views', './app/views');
 app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, '/app/public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: 'chiaveSegreta123',

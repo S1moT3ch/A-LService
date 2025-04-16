@@ -1,5 +1,6 @@
 const passport = require ('passport');
 const LocalStrategy = require('passport-local').Strategy;
+//const NomeBenvenuto = require('../routes/user.js')
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const { emit } = require('process');
 const uri = "mongodb+srv://Simone:S4ikJ4B2oYjj6Qpt@cluster0.ungo5pt.mongodb.net/?appName=Cluster0";
@@ -47,6 +48,7 @@ passport.use(
             if(utenteTrovato){
               utenteTrovato = false;
               const user = { id: 1, username: 'Simone'};
+              //NomeBenvenuto(username);
               return done(null, user);
             }
             return done(null, false);

@@ -4,20 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ACSAHomeConnect</title>
-    <link rel="stylesheet" href='style.css'>
+    <title>A&LService-Management</title>
+    <link rel="stylesheet" href='/stylesheets/styleLogin.css'>
+    <link rel="icon" type="image/vnd.icon" href='/images/LogoAl.ico'>
   </head>
   <body>
+    <div class="barra">
+      <p1>Gestionale di A&L</p1>
+    </div>
     <div class="container">
-      <h1>Login</h1>
+      <h1>Effettua l'accesso</h1>
 	      <form action="/login" method="POST">
           <label for="username">Username</label>
           <input type="text" name="username"><br><br>
 
           <label for="password">Password</label>
           <input type="text" name="password"><br><br>
-
-          <input type="submit" value="Login">
+          
+          <div style="text-align: center;">
+            <button type="submit">Login</button>
+          </div>
         </form>
     </div>
   </body>
