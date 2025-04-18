@@ -1,13 +1,16 @@
 const passport = require ('passport');
 const LocalStrategy = require('passport-local').Strategy;
-//const NomeBenvenuto = require('../routes/user.js')
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const { emit } = require('process');
+const fs = require('fs');
+const path = require('path');
+const filePath = path.join(__dirname, '../json/temp.json');
 const uri = "mongodb+srv://Simone:S4ikJ4B2oYjj6Qpt@cluster0.ungo5pt.mongodb.net/?appName=Cluster0";
 var userdb = 0;
 var userinput = 0;
 var userpassword = 0;
 var utenteTrovato = false;
+
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -48,7 +51,7 @@ passport.use(
             if(utenteTrovato){
               utenteTrovato = false;
               const user = { id: 1, username: 'Simone'};
-              //NomeBenvenuto(username);
+              fs.writeFileSync(filePath, JSON.stringify({ username }), 'utf8');
               return done(null, user);
             }
             return done(null, false);
@@ -68,5 +71,6 @@ passport.deserializeUser((id, done) => {
     const user = { id: 1, username: 'Simone'};
     done(null, user);
 });
+
 
 module.exports = passport;

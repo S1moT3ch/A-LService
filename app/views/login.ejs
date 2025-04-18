@@ -7,6 +7,7 @@
     <title>A&LService-Management</title>
     <link rel="stylesheet" href='/stylesheets/styleLogin.css'>
     <link rel="icon" type="image/vnd.icon" href='/images/LogoAl.ico'>
+    <script src="/script/hidePssw.js"></script>
   </head>
   <body>
     <div class="barra">
@@ -19,8 +20,10 @@
           <input type="text" name="username"><br><br>
 
           <label for="password">Password</label>
-          <input type="text" name="password"><br><br>
-          
+          <input type="password" name="password" id="pwd"><br><br>
+
+          <input type="button" onclick="showPwd()" value="Mostra/nascondi password">
+
           <div style="text-align: center;">
             <button type="submit">Login</button>
           </div>
