@@ -4,8 +4,8 @@ const passport = require('../config/passport-config');
 const { MongoDBCollectionNamespace } = require('mongodb');
 const fs = require('fs');
 const path = require('path');
-const filePath = path.join(__dirname, '../json/temp.json');
-var nome = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+let nome;
+
 
 router.get('/login', (req, res) => {
     if(req.isAuthenticated()) return res.redirect('/user/dashboard');
@@ -13,10 +13,35 @@ router.get('/login', (req, res) => {
     
 })
 
-router.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/user/dashboard/nome='+nome.username,
-    failureRedirect: '/login'
-}));
+
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local-login', (err, user, info) => {
+      if (err) return next(err);
+      if (!user) return res.redirect('/login'); // stesso comportamento di failureRedirect
+      req.logIn(user, (err) => {
+        if (err) return next(err);
+  
+        // Leggi il file JSON
+        const filePath = path.join(__dirname, '../json/temp.json');
+        fs.readFile(filePath, 'utf8', (err, data) => {
+          if (err) {
+            console.error("Errore lettura file:", err);
+            return res.redirect('/login');
+          }
+  
+          
+          try {
+            nome = JSON.parse(data);
+          } catch (parseErr) {
+            console.error("Errore parsing JSON:", parseErr);
+            return res.redirect('/login');
+          }
+  
+          return res.redirect('/user/dashboard/nome=' + nome.username);
+        });
+      });
+    })(req, res, next);
+  });
 
 router.get('/logout', (req,res) => {
     req.logout(function(err) {

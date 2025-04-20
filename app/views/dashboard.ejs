@@ -7,14 +7,50 @@
     <title>A&LService-Management</title>
     <link rel="stylesheet" href='/stylesheets/styleDashboard.css'>
     <link rel="icon" type="image/vnd.icon" href='/images/LogoAl.ico'>
+    <script>
+      // Funzione per recuperare il parametro dalla query string
+       // Funzione per estrarre il parametro dal percorso dell'URL
+       function getNomeFromPath() {
+            const path = window.location.pathname; // Ottieni il percorso dell'URL
+            const regex = /\/user\/dashboard\/nome=([^\/]+)/; // Regex per catturare "nome=[valore]"
+            const match = path.match(regex); // Esegui il match
 
+            if (match && match[1]) {
+                return match[1]; // Restituisce il valore catturato (il valore dopo "nome=")
+            }
+            return null; // Se non c'è "nome=" nel percorso
+        }
+
+      // Quando la pagina è completamente caricata
+      window.onload = function() {
+          // Ottieni il valore del parametro dalla query string (ad esempio "valore")
+          var nomeUtente = getNomeFromPath('nome');
+
+          // Se il parametro esiste, scrivilo nell'elemento con id="output"
+          if (nomeUtente) {
+              document.getElementById('saluto').innerText = 'Ciao ' + nomeUtente + '. Quale operazione vuoi fare?';
+          } else {
+              document.getElementsById('saluto').innerText = 'Parametro "valore" non trovato.';
+          }
+      };
+  </script>
   </head>
   <body>
     <div class="barra">
       <p1>Gestionale di A&L</p1>
     </div>
     <div class="benvenuto">
-      <p1>lol</p2>
+      <p1 id="saluto"></p1>
+    </div>
+    <div class="azioni-container">
+      <a href="/user/dashboard/magazzino">
+        <button class="azione-btn" id="azione1">Gestisci il magazzino</button>
+      </a>
+  </div>
+    <div class="uscita">
+      <a href="/logout">
+        <button class="logout-btn" id="logout">Logout</button>
+    </a>
     </div>
   </body>
 </html>

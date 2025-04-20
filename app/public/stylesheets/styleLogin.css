@@ -62,3 +62,34 @@
   button:hover {
     background-color: #0069d9;
   }
+
+  /* Stile per il campo della password */
+.campo-password {
+  position: relative;
+  margin-top: 20px;
+}
+
+/* Stile per il pulsante di mostra/nascondi password */
+.toggle-btn {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 1px solid #4d6575;
+  border-radius: 8px;
+  background-color: #a0c5da;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.toggle-btn:hover {
+  background-color: #4d6575;
+  border-color: #a0c5da;
+}
+
+/* Effetto di transizione fluido per il pulsante */
+.toggle-btn:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
+}
