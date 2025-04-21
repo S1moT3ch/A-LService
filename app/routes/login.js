@@ -13,11 +13,15 @@ router.get('/login', (req, res) => {
     
 })
 
+router.get('/login/error=true', (req, res) => {
+  res.render('login');
+})
+
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local-login', (err, user, info) => {
       if (err) return next(err);
-      if (!user) return res.redirect('/login'); // stesso comportamento di failureRedirect
+      if (!user) return res.redirect('/login/error=true'); // stesso comportamento di failureRedirect
       req.logIn(user, (err) => {
         if (err) return next(err);
   

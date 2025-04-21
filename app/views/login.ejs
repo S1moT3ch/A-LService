@@ -19,13 +19,20 @@
           <label for="username">Username</label>
           <input type="text" name="username"><br><br>
 
-          <label for="password">Password</label>
-          <input type="password" name="password" id="pwd"><br><br>
+          <div class="password-wrapper">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="pwd"><br><br>
+        
 
-          <div class="campo-password">
-          <input type="button" onclick="showPwd()" value="Mostra/nascondi password" class="toggle-btn">
+            
           </div>
-
+          <div class="show-password">
+            <input type="checkbox" id="togglePwd" onclick="showPwd()">
+            <label for="togglePwd">Mostra password</label>
+          </div>
+          <div class="errore" id="errorBox" style="display: none;">
+            Credenziali errate. Riprova.
+          </div>
           <div style="text-align: center;">
             <button type="submit">Login</button>
           </div>

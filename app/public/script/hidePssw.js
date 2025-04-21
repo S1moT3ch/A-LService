@@ -6,3 +6,10 @@ function showPwd() {
     input.type = "password";
   }
 }
+
+window.addEventListener("DOMContentLoaded", function () {
+  const pathname = window.location.pathname;
+  if (pathname.includes("/error=true")) {
+    document.getElementById("errorBox").style.display = "block";
+  }
+});
