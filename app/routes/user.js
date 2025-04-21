@@ -1,11 +1,11 @@
 const express = require('express');
-//const app= express;
+const app= express();
 const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 const dataPath = path.join(__dirname, '../json/temp.json');
 
-
+app.use('/user/dashboard/magazzino', express.static(path.join(__dirname, '../../my-app/build')));
 
 router.get('/dashboard/nome=:username', (req, res) => {
     // Leggi il file JSON ogni volta che viene fatta la richiesta
@@ -37,7 +37,8 @@ router.get('/dashboard-2', (req,res) =>{
 })
 
 router.get('/dashboard/magazzino', (req,res) =>{
-    res.render('magazzino');
+  res.sendFile(path.join(__dirname, '../../my-app/build', 'index.html'));
+    //res.render('magazzino');
 })
 
 module.exports = router;
