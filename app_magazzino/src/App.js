@@ -1,43 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from 'react-router-dom';
+import React, { useState } from 'react';
+import ProductForm from './components/ProductForm';
+import ProductList from './components/ProductList';
 
-import Magazzino from './pages/Magazzino'; // creeremo questo file
+const App = () => {
+  const [products, setProducts] = useState([]);
 
-function App() {
+  const handleAddProduct = (product) => {
+    setProducts([...products, product]);
+  };
+
+  useEffect(() => {
+    fetch('/api/prodotti')
+      .then((res) => res.json())
+      .then(setProducts);
+  }, []);
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/user/dashboard/magazzino" element={<Home />} />
-        {/* Puoi aggiungere altre rotte qui */}
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
+    <div>
+      <h1>Gestione Prodotti</h1>
+      <ProductForm onAdd={handleAddProduct} />
+      <ProductList products={products} />
+    </div>
   );
-}
-
-const Home = () => (
-  <div className="App">
-    <header className="App-header">
-    <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
-  </div>
-);
+};
 
 export default App;

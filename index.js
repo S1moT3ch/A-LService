@@ -6,7 +6,7 @@ const path = require('path')
 const checkUserLogin = require('./app/middleware/check-user-login');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 //const conn = new DbConnection();
 
 /* Router */
