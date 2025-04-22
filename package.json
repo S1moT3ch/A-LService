@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js -e js,ejs"
+    "dev": "nodemon index.js -e js,ejs",
+    "start-react": "npm start --prefix ./app_magazzino",
+    "start-all": "concurrently \"npm run dev\" \"npm run start-react\""
   },
   "keywords": [],
   "author": "",
