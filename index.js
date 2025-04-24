@@ -1,24 +1,22 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
-const path = require('path')
-//const DbConnection = require('./app/config/db-connection');
+const path = require('path');
 const checkUserLogin = require('./app/middleware/check-user-login');
+const mongoose = require('mongoose');
+require('dotenv').config();
+
+const MagApp = require('./app');
 
 const app = express();
-const port = process.env.PORT || 3001;
-//const conn = new DbConnection();
+const port = process.env.PORT || 3000;
 
 /* Router */
 const loginRouter = require('./app/routes/login');
 const userRouter = require('./app/routes/user');
+const magRouter = require('./app/routes/magazzino');
 
 app.listen(port, () => {console.log('Server in ascolto alla porta ' + port)})
-
-//conn.on('dbConnection', conn => {
-    //app.listen(port, () => {console.log('ok')})
-//});
-//conn.dbconnect;
 
 app.set('views', './app/views');
 app.set('view engine', 'ejs');
@@ -33,3 +31,4 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(loginRouter);
 app.use('/user', checkUserLogin(), userRouter);
+app.use(magRouter);

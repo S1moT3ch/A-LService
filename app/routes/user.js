@@ -36,32 +36,5 @@ router.get('/dashboard-2', (req,res) =>{
     res.send(html);
 })
 
-router.get('/dashboard/magazzino', (req,res) =>{
-    //res.render('magazzino');
-    res.sendFile(path.join(__dirname, '../../app_magazzino/build', 'index.html'));
-})
-
-// API: per esempio, salvataggio prodotto
-const products = [];
-
-app.post('/api/prodotti', (req, res) => {
-  const { name, location } = req.body;
-  if (!name || !location) return res.status(400).json({ error: 'Dati mancanti' });
-  const newProduct = { name, location };
-  products.push(newProduct);
-  res.status(201).json(newProduct);
-});
-
-app.get('/api/prodotti', (req, res) => {
-  res.json(products);
-});
-
-// Servire il frontend React su /prodotti
-app.use(express.static(path.join(__dirname, '../app_magazzino/build')));
-
-// Route fallback (React router)
-app.get('/prodotti/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../app_magazzino/build', 'index.html'));
-});
 
 module.exports = router;
