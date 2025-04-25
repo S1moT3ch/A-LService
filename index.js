@@ -6,7 +6,7 @@ const checkUserLogin = require('./app/middleware/check-user-login');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const MagApp = require('./app');
+//const MagApp = require('./app');
 
 const app = express();
 const port = process.env.PORT || 3000;

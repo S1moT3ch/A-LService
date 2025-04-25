@@ -10,11 +10,10 @@ import ListaPezzi from './components/ListaPezzi';
 import FormPezzo from './components/FormPezzo';
 import './components/style/FormApp.css';
 
-const ButtonIndietro = () => {
-  const handleIndietroClick = () => {
-    window.history.back();
-  };
-}
+const handleClick = () => {
+  window.history.back();
+};
+
 const MagazzinoPage = () => {
   const [refresh, setRefresh] = useState(false);
   return (
@@ -29,14 +28,11 @@ const MagazzinoPage = () => {
       <FormPezzo onSaved={() => setRefresh(!refresh)} />
       <ListaPezzi key={refresh} />
 
-      <div class="indietro">
-      <input
-      type="button"
-      value="← Indietro"
-      onClick={ButtonIndietro}
-      className="btn-indietro"
-    />
-    </div>
+      <div className="indietro">
+      <button onClick={handleClick} className="btn-indietro">
+        ← Indietro
+      </button>
+      </div>
     </div>
     
   );

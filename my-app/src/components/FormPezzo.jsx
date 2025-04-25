@@ -37,6 +37,7 @@ const FormPezzo = ({ onSaved }) => {
         type="number"
         placeholder="Quantità"
         value={quantita}
+        min={0}
         onChange={e => setQuantita(e.target.value)}
         className="border p-2 w-full"
         required
@@ -48,6 +49,7 @@ const FormPezzo = ({ onSaved }) => {
         required
       >
         <option value="">Seleziona locazione</option>
+        <option value="Deposito">Deposito</option>
         {locazioni.map(loc => (
           <option key={loc._id} value={loc._id}>
             {loc.nome}
