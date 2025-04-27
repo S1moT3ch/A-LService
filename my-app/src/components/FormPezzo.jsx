@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import API from '../api/api';
+import API from '../api/api.js';
 import './style/FormPezzo.css';
 
 const FormPezzo = ({ onSaved }) => {
@@ -8,17 +8,35 @@ const FormPezzo = ({ onSaved }) => {
   const [locazioni, setLocazioni] = useState([]);
   const [locazioneId, setLocazioneId] = useState('');
 
+  const [pezzi, setPezzi] = useState('test'); // 👈 Aggiungiamo un array locale
+
   useEffect(() => {
     API.get('/locazioni').then(res => setLocazioni(res.data));
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await API.post('/pezzi', { nome, quantita, locazione: locazioneId });
+    const nuovoPezzo = { nome, quantita, locazione: locazioneId };
+
+    // Aggiorna pezzi localmente
+    setPezzi(prev => [...prev, nuovoPezzo]);
+
+    // Reset del form
     setNome('');
     setQuantita(1);
     setLocazioneId('');
-    onSaved();
+  };
+
+  const inviaAlBackend = async () => {
+    try {
+      await API.post('/pezzi-json', pezzi); // 👈 Invia tutto l'array pezzi
+      alert('JSON inviato al server!');
+      onSaved();
+      setPezzi([]); // svuota dopo aver inviato
+    } catch (err) {
+      console.error(err);
+      alert('Errore nell\'invio');
+    }
   };
 
   return (
@@ -38,7 +56,7 @@ const FormPezzo = ({ onSaved }) => {
         placeholder="Quantità"
         value={quantita}
         min={0}
-        onChange={e => setQuantita(e.target.value)}
+        onChange={e => setQuantita(Number(e.target.value))} // 👈 Forziamo tipo number
         className="border p-2 w-full"
         required
       />
@@ -57,9 +75,18 @@ const FormPezzo = ({ onSaved }) => {
         ))}
       </select>
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-        Salva
+        Aggiungi
       </button>
     </form>
+
+    {/* Pulsante per inviare tutto */}
+    <button 
+      onClick={inviaAlBackend}
+      className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
+      disabled={pezzi.length === 0}
+    >
+      Invia JSON al server
+    </button>
     </div>
   );
 };

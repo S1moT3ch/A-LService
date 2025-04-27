@@ -10,11 +10,28 @@
   }
 
   .barra {
-    text-align: right;
     color:#ffffff;
-    background-color: #5aafc7;
-    font-size: 150%;
+    background-color: #4fdada;
+    display: grid;
+    grid-template-columns: 30vw 13vw 13vw 13vw 30vw;
+    grid-template-rows: 0vh 10vh;
+    height: 10vh;
   }
+  .caption {
+    grid-column: 5;
+    grid-row: 2;
+    height: auto;
+    vertical-align: bottom;
+    text-align: center;
+    
+  }
+  
+  .logo {
+    grid-column: 1;
+    width: 20vh;
+    height: auto;
+  }
+
   
   .container {
     width: 100%;
@@ -24,7 +41,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 70vh;
+    width: 80vw;
+    background: #f5fcff;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin: 10vh auto;
   }
   
   h1 {
@@ -84,4 +106,14 @@
 
   .errore{
     color: #d81717;
+  }
+
+  @media screen and (max-width: 992px) {
+    .caption{
+      font-size: 6vw;
+    }
+
+    .container{
+      height: 60vh;
+    }
   }

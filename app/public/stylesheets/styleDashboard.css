@@ -10,10 +10,26 @@
   }
 
   .barra {
-    text-align: right;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
     color:#ffffff;
+    padding: 10px 20px;
     background-color: #5aafc7;
     font-size: 150%;
+  }
+
+  .caption {
+    justify-self: start; /* forza il testo completamente a sinistra */
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .logo {
+    justify-self: end; /* forza il logo completamente a destra */
+    width: 100px;
+    height: auto;
   }
   
   .container {
