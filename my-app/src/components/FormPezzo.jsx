@@ -8,7 +8,8 @@ const FormPezzo = ({ onSaved }) => {
   const [locazioni, setLocazioni] = useState([]);
   const [locazioneId, setLocazioneId] = useState('');
 
-  const [pezzi, setPezzi] = useState('test'); // 👈 Aggiungiamo un array locale
+  const [pezzi, setPezzi] = useState([]); // 👈 Aggiungiamo un array locale
+  const numero = 1;
 
   useEffect(() => {
     API.get('/locazioni').then(res => setLocazioni(res.data));
@@ -29,13 +30,23 @@ const FormPezzo = ({ onSaved }) => {
 
   const inviaAlBackend = async () => {
     try {
-      await API.post('/pezzi-json', pezzi); // 👈 Invia tutto l'array pezzi
-      alert('JSON inviato al server!');
-      onSaved();
-      setPezzi([]); // svuota dopo aver inviato
-    } catch (err) {
-      console.error(err);
-      alert('Errore nell\'invio');
+      const jsonFile = new Blob([JSON.stringify(pezzi)], { type: 'application/json' });
+      const formData = new FormData();
+      formData.append('file', jsonFile, 'pezzi.json');
+  
+      const response = await fetch('/pezzi-json', { // <-- /api/pezzi-json se usi Router
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error('Errore nell\'invio al server');
+      }
+  
+      alert('Dati inviati con successo!');
+    } catch (error) {
+      console.error('Errore:', error);
+      alert('Errore durante l\'invio.');
     }
   };
 
