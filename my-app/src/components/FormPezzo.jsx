@@ -50,6 +50,29 @@ const FormPezzo = ({ onSaved }) => {
     }
   };
 
+  const gestisciSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const jsonFile = new Blob([JSON.stringify(pezzi)], { type: 'application/json' });
+      const formData = new FormData();
+      formData.append('file', jsonFile, 'pezzi.json');
+  
+      const response = await fetch('/pezzi-db', { // <-- /api/pezzi-json se usi Router
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error('Errore nell\'invio al server');
+      }
+  
+      alert('Dati inviati con successo!');
+    } catch (error) {
+      console.error('Errore:', error);
+      alert('Errore durante l\'invio.');
+    }
+  };
+
   return (
     <div className="form-container">
     <form onSubmit={handleSubmit} className="p-4 space-y-3">
@@ -97,6 +120,13 @@ const FormPezzo = ({ onSaved }) => {
       disabled={pezzi.length === 0}
     >
       Invia JSON al server
+    </button>
+    <button 
+      onClick={gestisciSubmit}
+      className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
+      disabled={pezzi.length === 0}
+    >
+      Invia al DB
     </button>
     </div>
   );

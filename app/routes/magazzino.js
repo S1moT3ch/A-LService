@@ -5,11 +5,15 @@ const app = express();
 const router = express.Router();
 const PezzoDB = require('../config/pezzoModel');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 const multer = require('multer');
 const upload = multer(); // Multer senza storage: useremo memoria (buffer)
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://Simone:S4ikJ4B2oYjj6Qpt@cluster0.ungo5pt.mongodb.net/?appName=Cluster0";
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/api/pezzi', require('../../routes/pezzi'));
 app.use('/api/locazioni', require('../../routes/locazioni'));
@@ -17,11 +21,63 @@ app.use('/api/locazioni', require('../../routes/locazioni'));
 // Serve i file statici generati da React
 router.use(express.static(path.join(__dirname, '../../my-app/build')));
 
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+async function run() {
+    try {
+      // Connect the client to the server	(optional starting in v4.7)
+      await client.connect();
+      const db = client.db("Magazzino");
+      pezzi = db.collection("pezzi")
+      // Send a ping to confirm a successful connection
+      await client.db("Magazzino").command({ ping: 1 });
+      console.log("Db MongoDB connesso per magazzino!");
+    } finally {
+    }
+  }
+run().catch(console.dir);
+
+const utenteSchema = new mongoose.Schema({
+  nome: String,
+  quantita: Number,
+  locazioni: String,
+});
+
+const Utente = mongoose.model('Utente', utenteSchema);
+
 router.get('/user/dashboard/magazzino', (req, res) => {
   res.sendFile(path.join(__dirname, '../../my-app/build', 'index.html'));
 });
 
+router.post('/pezzi-db', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'Nessun file inviato' });
+    }
+
+    // Recuperiamo il contenuto del file
+    const fileBuffer = req.file.buffer;
+    const jsonString = fileBuffer.toString('utf8');
+    const pezzo = JSON.parse(jsonString);
+
+    console.log('Dati ricevuti:', pezzo);
+    
+    pezzi.insertMany(pezzo);
+    res.status(201).json({ messaggio: 'Pezzo inserito' });
+
+  } catch (err) {
+    console.error('Errore durante l\'inserimento:', err);
+    res.status(500).json({ errore: 'Errore del server' });
+  }
+});
+
 router.post('/pezzi-json', upload.single('file'), (req, res) => {
+
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'Nessun file inviato' });
@@ -56,11 +112,6 @@ router.post('/pezzi-json', upload.single('file'), (req, res) => {
     fs.promises.writeFile(filePath, JSON.stringify(updatedData, null, 2));
 
 
-    // Aggiungi i dati al database
-    for (const pezzo of pezzi) {
-      const newPezzo = new PezzoDB(pezzo); // Crea una nuova istanza del modello
-      newPezzo.save();  // Salva l'oggetto nel database
-    }
     res.status(200).json({ message: 'File JSON ricevuto correttamente' });
   } catch (error) {
     console.error('Errore parsing JSON:', error);
@@ -84,6 +135,18 @@ router.get('/pezzi-json', (req, res) => {
       return res.status(500).json({ error: 'Errore nel parsare il file JSON' });
     }
   });
+});
+
+router.get('/pezzi-db', (req, res) => {
+  lista=pezzi.find({});
+  console.log(lista)
+
+    try {
+      const elenco = JSON.parse(lista);  // Converte il contenuto del file in un oggetto JSON
+      res.json(elenco);  // Restituisce i dati come risposta
+    } catch (parseError) {
+      return res.status(500).json({ error: 'Errore nel parsare il file JSON' });
+    }
 });
 
 
