@@ -9,7 +9,7 @@ const ListaPezzi = () => {
 
   // Carica i dati dal backend quando il componente è montato
   useEffect(() => {
-    fetch('/pezzi-json')  // Modifica questo URL con quello del tuo backend
+    fetch('/pezzi-db')  // Modifica questo URL con quello del tuo backend
       .then((response) => response.json())  // Converte la risposta in JSON
       .then((data) => {
         setPezzi(data);  // Imposta i dati nel state

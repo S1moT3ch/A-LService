@@ -46,7 +46,6 @@ function App() {
           path="/user/dashboard/magazzino"
           element={<MagazzinoPage />}
         />
-        <Route path="*" element={<Navigate to="/user/dashboard/magazzino" replace />} />
       </Routes>
     </Router>
   );

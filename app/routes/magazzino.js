@@ -137,6 +137,16 @@ router.get('/pezzi-json', (req, res) => {
   });
 });
 
+router.get('/pezzi-db', async (req, res) => {
+  try {
+    oggetti = await pezzi.find().toArray();
+    console.log(oggetti);
+    res.json(oggetti);
+  } catch (err) {
+    res.status(500).json({ error: 'Errore nel recupero dati' });
+  }
+});
+
 router.get('/pezzi-db', (req, res) => {
   lista=pezzi.find({});
   console.log(lista)

@@ -1,0 +1,75 @@
+/* Reset di base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: #ecf0f1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Contenitore principale */
+  .container {
+    text-align: center;
+    padding: 2rem;
+    max-width: 800px;
+  }
+  
+  /* Logo */
+  .logo {
+    max-width: 400px;
+    margin-bottom: 2rem;
+  }
+  
+  /* Titolo visivo alternativo */
+  .header .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #00c3ff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Sottotitolo */
+  .header .subtitle {
+    font-size: 1.2rem;
+    color: #bdc3c7;
+    margin-bottom: 2rem;
+  }
+  
+  /* Pulsante di accesso */
+  .btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    background: linear-gradient(to right, #00c3ff, #0077be);
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0, 195, 255, 0.4);
+    transition: all 0.3s ease;
+  }
+  
+  .btn:hover {
+    background: linear-gradient(to right, #0077be, #005f9e);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 195, 255, 0.6);
+  }
+  
+  /* Footer */
+  .footer {
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: #95a5a6;
+  }

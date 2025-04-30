@@ -61,13 +61,11 @@ const FormPezzo = ({ onSaved }) => {
         method: 'POST',
         body: formData,
       });
-
-      setPezzi([]);
   
       if (!response.ok) {
         throw new Error('Errore nell\'invio al server');
       }
-      
+  
       alert('Dati inviati con successo!');
     } catch (error) {
       console.error('Errore:', error);
@@ -114,12 +112,21 @@ const FormPezzo = ({ onSaved }) => {
         Aggiungi
       </button>
     </form>
-    <button
-      onClick={gestisciSubmit}
-      className="button-save"
+
+    {/* Pulsante per inviare tutto */}
+    <button 
+      onClick={inviaAlBackend}
+      className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
       disabled={pezzi.length === 0}
     >
-      Salva
+      Invia JSON al server
+    </button>
+    <button 
+      onClick={gestisciSubmit}
+      className="mt-4 bg-green-500 text-white px-4 py-2 rounded"
+      disabled={pezzi.length === 0}
+    >
+      Invia al DB
     </button>
     </div>
   );

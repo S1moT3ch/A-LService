@@ -84,6 +84,30 @@
     display: block;
     margin-top: 5px;
   }
+
+  .button-save {
+    width: 100%;
+    padding: 12px;
+    background-color: #4A90E2;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  /* Hover effetto */
+  .button-save:hover {
+    background-color: #357ABD;
+  }
+  
+  /* Disabled stato */
+  .button-save:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
   
   /* Error message styling */
   .error-message {
