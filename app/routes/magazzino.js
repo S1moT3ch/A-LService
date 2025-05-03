@@ -11,6 +11,7 @@ const multer = require('multer');
 const upload = multer(); // Multer senza storage: useremo memoria (buffer)
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://Simone:S4ikJ4B2oYjj6Qpt@cluster0.ungo5pt.mongodb.net/?appName=Cluster0";
+const { ObjectId } = require('mongodb'); // serve per convertire l'ID
 
 app.use(express.json());
 app.use(cors());
@@ -159,5 +160,26 @@ router.get('/pezzi-db', (req, res) => {
     }
 });
 
+// DELETE /elimina-pezzi-db/:id
+router.delete('/elimina-pezzi-db/:id', async (req, res) => {
+  const { id } = req.params;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'ID non valido' });
+  }
+
+  try {
+    const result = await pezzi.deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: 'Pezzo non trovato' });
+    }
+
+    res.status(200).json({ message: 'Pezzo eliminato con successo' });
+  } catch (error) {
+    console.error('Errore durante l\'eliminazione:', error);
+    res.status(500).json({ error: 'Errore del server' });
+  }
+});
 
 module.exports = router;

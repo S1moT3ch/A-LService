@@ -26,6 +26,40 @@
   h1 {
     margin-bottom: 30px;
   }
+
+  .btn-toggle {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-toggle:hover {
+    background-color: #45a049;
+  }
+  
+  .form-container {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+  }
+
+  .form-animated {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
+  
+  .form-animated.open {
+    max-height: 1000px; /* Assicurati che sia più grande dell'altezza del form */
+  }
   
 .btn-indietro {
     padding: 10px 20px;

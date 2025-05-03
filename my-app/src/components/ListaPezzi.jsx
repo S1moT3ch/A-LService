@@ -21,6 +21,20 @@ const ListaPezzi = () => {
       });
   }, []);  // Il secondo argomento vuoto [] assicura che l'effetto venga eseguito solo una volta al montaggio
 
+  const handleDelete = async (id) => {
+    if (window.confirm('Sei sicuro di voler eliminare questo pezzo?')) {
+      try {
+        await fetch(`/elimina-pezzi-db/${id}`, {
+          method: 'DELETE',
+        });
+        setPezzi(pezzi.filter(p => p._id !== id));
+      } catch (err) {
+        alert('Errore durante l\'eliminazione del pezzo.');
+      }
+    }
+  };
+
+
   if (loading) {
     return <div>Caricamento in corso...</div>;  // Messaggio di caricamento
   }
@@ -51,6 +65,14 @@ const ListaPezzi = () => {
                 <td>{p.nome}</td>
                 <td>{p.quantita}</td>
                 <td>{p.locazione || 'N/A'}</td>
+                <td>
+                  <button
+                    className="btn-delete"
+                    onClick={() => handleDelete(p._id)}
+                  >
+                    🗑️
+                  </button>
+                </td>
               </tr>
             ))
           )}
