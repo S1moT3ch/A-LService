@@ -1,0 +1,55 @@
+/* Reset the default margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Container for the form to make it centered and give it some padding */
+  .form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style for the form header */
+  .form-container h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+   /* Placeholder text style */
+   input::placeholder,
+   select::placeholder {
+     color: #888;
+   }
+   
+   /* Submit button styles */
+   button[type="submit"] {
+     width: 100%;
+     padding: 12px;
+     background-color: #4A90E2;
+     color: white;
+     font-size: 16px;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+     transition: background-color 0.3s ease;
+   }
+   
+   /* Submit button hover effect */
+   button[type="submit"]:hover {
+     background-color: #357ABD;
+   }
+
+   .errore {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+  }

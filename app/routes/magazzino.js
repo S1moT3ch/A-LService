@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const app = express();
+app.use(express.json());
 const router = express.Router();
 const PezzoDB = require('../config/pezzoModel');
 const mongoose = require('mongoose');
@@ -13,7 +14,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://Simone:S4ikJ4B2oYjj6Qpt@cluster0.ungo5pt.mongodb.net/?appName=Cluster0";
 const { ObjectId } = require('mongodb'); // serve per convertire l'ID
 
-app.use(express.json());
+
 app.use(cors());
 
 app.use('/api/pezzi', require('../../routes/pezzi'));
@@ -34,7 +35,8 @@ async function run() {
       // Connect the client to the server	(optional starting in v4.7)
       await client.connect();
       const db = client.db("Magazzino");
-      pezzi = db.collection("pezzi")
+      pezzi = db.collection("pezzi");
+      locazioni = db.collection("locazioni");
       // Send a ping to confirm a successful connection
       await client.db("Magazzino").command({ ping: 1 });
       console.log("Db MongoDB connesso per magazzino!");
@@ -180,6 +182,41 @@ router.delete('/elimina-pezzi-db/:id', async (req, res) => {
     console.error('Errore durante l\'eliminazione:', error);
     res.status(500).json({ error: 'Errore del server' });
   }
+});
+
+router.post('/locazione-db', async (req, res) => {
+  console.log('Headers:', req.headers['content-type']);
+  console.log('Body:', req.body); // <-- vediamo cosa arriva
+
+  const { nome } = req.body;
+
+  if (!nome || !nome.trim()) {
+    return res.status(400).json({ error: 'Il nome della locazione è obbligatorio.' });
+  }
+
+  try {
+    const nuovaLocazione = {
+      nome: nome.trim(),
+      creatoIl: new Date()
+    };
+    const result = await locazioni.insertOne(nuovaLocazione);
+    res.status(201).json({ message: 'Locazione salvata', id: result.insertedId });
+  } catch (err) {
+    console.error('Errore durante il salvataggio della locazione:', err);
+    res.status(500).json({ error: 'Errore interno del server' });
+  }
+});
+
+router.get('/locazione-db', async (req, res) => {
+  lista = await locazioni.find().toArray();
+  console.log(lista)
+
+    try {
+      const elenco = JSON.parse(lista);  // Converte il contenuto del file in un oggetto JSON
+      res.json(elenco);  // Restituisce i dati come risposta
+    } catch (parseError) {
+      return res.status(500).json({ error: 'Errore nel parsare il file JSON' });
+    }
 });
 
 module.exports = router;

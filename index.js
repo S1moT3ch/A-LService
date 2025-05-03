@@ -9,6 +9,8 @@ require('dotenv').config();
 //const MagApp = require('./app');
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // <-- AGGIUNGI QUESTO
 const port = process.env.PORT || 3000;
 
 /* Router */

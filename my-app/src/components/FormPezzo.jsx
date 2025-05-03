@@ -9,7 +9,6 @@ const FormPezzo = ({ onSaved }) => {
   const [locazioneId, setLocazioneId] = useState('');
 
   const [pezzi, setPezzi] = useState([]); // 👈 Aggiungiamo un array locale
-  const numero = 1;
 
   useEffect(() => {
     API.get('/locazioni').then(res => setLocazioni(res.data));
@@ -57,7 +56,7 @@ const FormPezzo = ({ onSaved }) => {
       const formData = new FormData();
       formData.append('file', jsonFile, 'pezzi.json');
   
-      const response = await fetch('/pezzi-db', { // <-- /api/pezzi-json se usi Router
+      const response = await fetch('/pezzi-db', {
         method: 'POST',
         body: formData,
       });

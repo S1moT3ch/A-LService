@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import ListaPezzi from './components/ListaPezzi';
 import FormPezzo from './components/FormPezzo';
 import FormLocazione from './components/FormLocazione';
+import ListaLocazioni from './components/ListaLocazioni';
 import './components/style/FormApp.css';
 
 const handleClick = () => {
@@ -17,6 +18,7 @@ const handleClick = () => {
 
 const MagazzinoPage = () => {
   const [showForm, setShowForm] = useState(false);
+  const [showLoc, setShowLoc] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [refreshLoc, setRefreshLoc] = useState(false);
   return (
@@ -30,8 +32,20 @@ const MagazzinoPage = () => {
     
     {/* LOCATIONS */}
     <hr />
-      <h2>Gestione Locazioni</h2>
+      
+      <div className="form-toggle">
+      <button
+      onClick={() => setShowLoc(!showLoc)}
+      className="btn-toggle"
+      >
+      {showLoc ? '➖ Nascondi il modulo' : '➕ Inserisci una nuova locazione'}
+      </button>
+
+      <div className={`form-animated ${showLoc ? 'open' : ''}`}>
       <FormLocazione onSaved={() => setRefreshLoc(!refreshLoc)} />
+      <ListaLocazioni refreshTrigger={refreshLoc} />
+      </div>
+    </div>
 
     <div className="form-toggle">
       <button
