@@ -3,9 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import * as serviceWorkerRegistration from '../service-worker.js';
-serviceWorkerRegistration.register();
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then((reg) => {
+        console.log("SW registered: ", reg);
+      })
+      .catch((err) => {
+        console.error("SW registration failed: ", err);
+      });
+  });
+}
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

@@ -4,8 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Acoustic&Light - Home</title>
+  <link rel="manifest" href="../views/manifest.json">
   <link rel="icon" type="image/vnd.icon" href='/images/LogoAL.ico'>
   <link rel="stylesheet" href="/stylesheets/styleHome.css">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(() => console.log('SW registered'))
+        .catch(err => console.error('SW failed', err));
+    }
+  </script>
 </head>
 <body>
   <div class="container">
