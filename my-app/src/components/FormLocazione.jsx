@@ -15,7 +15,7 @@ const FormLocazione = ({ onSaved }) => {
     }
 
     try {
-      const response = await fetch('a-lservice-production-39a8.up.railway.app/locazione-db', {
+      const response = await fetch('http://a-lservice-production-39a8.up.railway.app/locazione-db', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
