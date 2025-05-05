@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+const cors = require('cors');
+app.use(cors({
+  origin: 'https://al-management.vercel.app/', // oppure '*' per testing
+}));
 
 if ('serviceWorker' in navigator) {
   window.addEventListener("load", () => {
