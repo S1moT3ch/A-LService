@@ -50,7 +50,7 @@ const FormLocazione = ({ onSaved }) => {
           }}
         />
         {errore && <p className="errore">{errore}</p>}
-        <button type="submit" disabled={!nome}>
+        <button type="submit" disabled={nome === ""}>
           Salva locazione
         </button>
       </form>

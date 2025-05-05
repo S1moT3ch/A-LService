@@ -7,11 +7,22 @@ const FormPezzo = ({ onSaved }) => {
   const [quantita, setQuantita] = useState(1);
   const [locazioni, setLocazioni] = useState([]);
   const [locazioneId, setLocazioneId] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [pezzi, setPezzi] = useState([]); // 👈 Aggiungiamo un array locale
 
   useEffect(() => {
-    API.get('/locazioni').then(res => setLocazioni(res.data));
+    fetch('/locazione-db')  // Modifica questo URL con quello del tuo backend
+      .then((response) => response.json())  // Converte la risposta in JSON
+      .then((data) => {
+        setLocazioni(data);  // Imposta i dati nel state
+        setLoading(false);  // Imposta lo stato di caricamento su false
+      })
+      .catch((err) => {
+        setError(err);  // Gestisce gli errori
+        setLoading(false);  // Imposta lo stato di caricamento su false
+      });
   }, []);
 
   const handleSubmit = (e) => {
@@ -102,9 +113,8 @@ const FormPezzo = ({ onSaved }) => {
         required
       >
         <option value="">Seleziona locazione</option>
-        <option value="Deposito">Deposito</option>
         {locazioni.map(loc => (
-          <option key={loc._id} value={loc._id}>
+          <option key={loc._id} value={loc.nome}>
             {loc.nome}
           </option>
         ))}

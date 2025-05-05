@@ -12,7 +12,7 @@
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0);
   }
   
   /* Style for the form header */
@@ -24,29 +24,48 @@
     font-weight: bold;
   }
 
+  button span {
+    display: none !important;
+  }
+
    /* Placeholder text style */
    input::placeholder,
    select::placeholder {
      color: #888;
    }
    
-   /* Submit button styles */
    button[type="submit"] {
-     width: 100%;
-     padding: 12px;
-     background-color: #4A90E2;
-     color: white;
-     font-size: 16px;
-     border: none;
-     border-radius: 4px;
-     cursor: pointer;
-     transition: background-color 0.3s ease;
-   }
-   
-   /* Submit button hover effect */
-   button[type="submit"]:hover {
-     background-color: #357ABD;
-   }
+    width: 100%;
+    padding: 12px;
+    background-color: #4A90E2;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Submit button hover effect */
+  button[type="submit"]:hover {
+    background-color: #357ABD;
+  }
+  
+  /* Disabled state for the button */
+  button[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Loading state text */
+  button[type="submit"]:disabled::after {
+    content: "Salvando...";
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    display: block;
+    margin-top: 5px;
+  }
 
    .errore {
     color: red;

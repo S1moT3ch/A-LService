@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './style/ListaLocazioni.css';
 
 const ListaLocazioni = ({ refreshTrigger }) => {
   const [locazioni, setLocazioni] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch('/locazione-db')  // Modifica questo URL con quello del tuo backend
       .then((response) => response.json())  // Converte la risposta in JSON
       .then((data) => {
-        setPezzi(data);  // Imposta i dati nel state
+        setLocazioni(data);  // Imposta i dati nel state
         setLoading(false);  // Imposta lo stato di caricamento su false
       })
       .catch((err) => {
@@ -19,11 +22,15 @@ const ListaLocazioni = ({ refreshTrigger }) => {
 
 
   const deleteLocazione = async (id) => {
-    try {
-      await axios.delete(`/api/locazioni/${id}`);
-      setLocazioni(locazioni.filter((loc) => loc.id !== id));
-    } catch (err) {
-      console.error('Errore nella cancellazione:', err);
+    if (window.confirm('Sei sicuro di voler eliminare questo pezzo?')) {
+      try {
+        await fetch(`/elimina-locazioni-db/${id}`, {
+          method: 'DELETE',
+        });
+        setLocazioni(locazioni.filter(l => l._id !== id));
+      } catch (err) {
+        alert('Errore durante l\'eliminazione della locazione.');
+      }
     }
   };
 
@@ -34,7 +41,7 @@ const ListaLocazioni = ({ refreshTrigger }) => {
         {locazioni.map((loc) => (
           <li key={loc.id}>
             {loc.nome}
-            <button onClick={() => deleteLocazione(loc.id)}>🗑️</button>
+            <button onClick={() => deleteLocazione(loc._id)}>🗑️</button>
           </li>
         ))}
       </ul>

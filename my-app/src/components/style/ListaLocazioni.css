@@ -1,0 +1,51 @@
+.lista-locazioni {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .lista-locazioni h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .lista-locazioni ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .lista-locazioni li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .lista-locazioni li:hover {
+    background-color: #f0f8ff;
+  }
+  
+  .lista-locazioni button {
+    background-color: #b3d3f1;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .lista-locazioni button:hover {
+    background-color: #c0392b;
+  }

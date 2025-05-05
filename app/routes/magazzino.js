@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const app = express();
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 app.use(express.json());
 const router = express.Router();
 const PezzoDB = require('../config/pezzoModel');
@@ -51,8 +53,6 @@ const utenteSchema = new mongoose.Schema({
   locazioni: String,
 });
 
-const Utente = mongoose.model('Utente', utenteSchema);
-
 router.get('/user/dashboard/magazzino', (req, res) => {
   res.sendFile(path.join(__dirname, '../../my-app/build', 'index.html'));
 });
@@ -67,8 +67,12 @@ router.post('/pezzi-db', upload.single('file'), async (req, res) => {
     const fileBuffer = req.file.buffer;
     const jsonString = fileBuffer.toString('utf8');
     const pezzo = JSON.parse(jsonString);
+    const username = req.cookies.username.username;
 
-    console.log('Dati ricevuti:', pezzo);
+    pezzo.forEach(p => {
+      p.creatoIl = new Date();
+      p.inseritoDa = username; // Aggiungi l'utente che ha inserito il pezzo
+    });
     
     pezzi.insertMany(pezzo);
     res.status(201).json({ messaggio: 'Pezzo inserito' });
@@ -150,17 +154,6 @@ router.get('/pezzi-db', async (req, res) => {
   }
 });
 
-router.get('/pezzi-db', (req, res) => {
-  lista=pezzi.find({});
-  console.log(lista)
-
-    try {
-      const elenco = JSON.parse(lista);  // Converte il contenuto del file in un oggetto JSON
-      res.json(elenco);  // Restituisce i dati come risposta
-    } catch (parseError) {
-      return res.status(500).json({ error: 'Errore nel parsare il file JSON' });
-    }
-});
 
 // DELETE /elimina-pezzi-db/:id
 router.delete('/elimina-pezzi-db/:id', async (req, res) => {
@@ -195,10 +188,15 @@ router.post('/locazione-db', async (req, res) => {
   }
 
   try {
+    const username = req.cookies.username.username;
+
     const nuovaLocazione = {
       nome: nome.trim(),
-      creatoIl: new Date()
+      creatoIl: new Date(),
+      inseritoDa: username
     };
+
+    
     const result = await locazioni.insertOne(nuovaLocazione);
     res.status(201).json({ message: 'Locazione salvata', id: result.insertedId });
   } catch (err) {
@@ -208,15 +206,56 @@ router.post('/locazione-db', async (req, res) => {
 });
 
 router.get('/locazione-db', async (req, res) => {
-  lista = await locazioni.find().toArray();
-  console.log(lista)
-
     try {
-      const elenco = JSON.parse(lista);  // Converte il contenuto del file in un oggetto JSON
-      res.json(elenco);  // Restituisce i dati come risposta
+      lista = await locazioni.find().toArray();
+      console.log(lista)
+      res.json(lista);  // Restituisce i dati come risposta
     } catch (parseError) {
       return res.status(500).json({ error: 'Errore nel parsare il file JSON' });
     }
+});
+
+router.delete('/elimina-locazioni-db/:id', async (req, res) => {
+  const { id } = req.params;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'ID non valido' });
+  }
+
+  try {
+    const result = await locazioni.deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: 'Locazione non trovata' });
+    }
+
+    res.status(200).json({ message: 'Locazione eliminata con successo' });
+  } catch (error) {
+    console.error('Errore durante l\'eliminazione:', error);
+    res.status(500).json({ error: 'Errore del server' });
+  }
+});
+
+router.put('/pezzi-db/:id', async (req, res) => {
+  const id = req.params.id;
+  const { nome, quantita, locazione } = req.body;
+  const username = req.cookies.username.username;
+
+  try {
+    const result = await pezzi.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { nome, quantita: parseInt(quantita), locazione, modificatoIl: new Date(), username } }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ message: 'Pezzo non trovato' });
+    }
+
+    res.status(200).json({ message: 'Pezzo aggiornato correttamente' });
+  } catch (err) {
+    console.error('Errore durante la PUT:', err);
+    res.status(500).json({ error: 'Errore interno del server' });
+  }
 });
 
 module.exports = router;

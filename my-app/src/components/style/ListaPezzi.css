@@ -37,6 +37,18 @@
     font-weight: bold;
     color: #333;
   }
+
+  /*
+  .th-locazione {
+    width: 15vw;
+    text-align: center;
+  }
+
+  .th-azioni {
+    width: 32vw;
+    text-align: center;
+  }
+  */
   
   /* Table rows */
   td {
@@ -81,6 +93,7 @@
     color: white;
     border: none;
     padding: 6px 12px;
+    margin: 6px;
     cursor: pointer;
     border-radius: 6px;
     font-size: 14px;
@@ -90,3 +103,71 @@
   .btn-delete:hover {
     background-color: #c0392b;
   }
+
+.lista-container th,
+.lista-container td {
+  padding: 12px 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.lista-container th {
+  background-color: #eaf3fc;
+  color: #333;
+  font-weight: bold;
+}
+
+.lista-container tr:nth-child(even) {
+  background-color: #fdfdfd;
+}
+
+.lista-container tr:hover {
+  background-color: #f0f8ff;
+}
+
+.lista-container input {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.lista-container .empty-message {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  padding: 20px 0;
+}
+
+.lista-container button {
+  margin: 0 2px;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.lista-container button:hover {
+  opacity: 0.8;
+}
+
+.lista-container button:nth-child(1) {
+  background-color: #4caf50; /* Salva - verde */
+  margin: 6px;
+  color: white;
+}
+
+.lista-container button:nth-child(2) {
+  background-color: #b3d3f1; /* Cancella - rosso */
+  margin: 6px;
+  color: white;
+}
+
+.lista-container button:nth-child(3) {
+  background-color: #1909aa; /* Modifica - blu */
+  margin: 6px;
+  color: white;
+}

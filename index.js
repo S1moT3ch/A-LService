@@ -3,14 +3,15 @@ const session = require('express-session');
 const passport = require('passport');
 const path = require('path');
 const checkUserLogin = require('./app/middleware/check-user-login');
-const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 //const MagApp = require('./app');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); // <-- AGGIUNGI QUESTO
+app.use(express.json());
+app.use(cookieParser());
 const port = process.env.PORT || 3000;
 
 /* Router */

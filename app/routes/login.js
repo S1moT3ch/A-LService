@@ -1,5 +1,8 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const app = express();
 const router = express.Router();
+router.use(cookieParser());
 const passport = require('../config/passport-config');
 const { MongoDBCollectionNamespace } = require('mongodb');
 const fs = require('fs');
@@ -36,6 +39,12 @@ router.post('/login', (req, res, next) => {
           
           try {
             nome = JSON.parse(data);
+            res.cookie('username', nome, {
+              maxAge: 3600000, // Tempo di vita del cookie in millisecondi (1 ora in questo caso)
+              httpOnly: false,  // Per impedire che JavaScript acceda al cookie
+              secure: false    // Impostato su true solo se il sito è in HTTPS
+            });
+
           } catch (parseErr) {
             console.error("Errore parsing JSON:", parseErr);
             return res.redirect('/login');
@@ -57,5 +66,6 @@ router.get('/logout', (req,res) => {
 router.get('*', (req, res) => {
   res.render('home');
 })
+
 
 module.exports = router;
