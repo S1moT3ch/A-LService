@@ -18,6 +18,15 @@ import {
       </div>
     );
   };
+
+  const Home = () => {
+    const [refresh, setRefresh] = useState(false);
+    return (
+      <div className="max-w-4xl mx-auto">
+        <Home key={refresh} />
+      </div>
+    );
+  };
   
   function App() {
     return (
