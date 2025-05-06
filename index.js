@@ -12,7 +12,7 @@ require('dotenv').config();
 const app = express();
 app.use(cors({
   origin: '*',
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'OPTIONS', 'DELETE'],
   allowedHeaders: ['Content-Type']
 }));
 app.options('*', cors());

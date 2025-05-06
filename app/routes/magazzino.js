@@ -239,12 +239,12 @@ router.delete('/elimina-locazioni-db/:id', async (req, res) => {
 router.put('/pezzi-db/:id', async (req, res) => {
   const id = req.params.id;
   const { nome, quantita, locazione } = req.body;
-  const username = req.cookies.username.username;
+  //const username = req.cookies.username.username;
 
   try {
     const result = await pezzi.updateOne(
       { _id: new ObjectId(id) },
-      { $set: { nome, quantita: parseInt(quantita), locazione, modificatoIl: new Date(), username } }
+      { $set: { nome, quantita: parseInt(quantita), locazione, modificatoIl: new Date() } }
     );
 
     if (result.matchedCount === 0) {
