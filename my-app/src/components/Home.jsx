@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import "./styleHome.css"; // Assicurati che il percorso sia corretto
+import "./style/styleHome.css";
 
 export default function Home() {
   useEffect(() => {
