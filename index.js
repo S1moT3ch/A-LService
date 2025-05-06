@@ -1,15 +1,22 @@
 const express = require('express');
+const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 const path = require('path');
 const checkUserLogin = require('./app/middleware/check-user-login');
 const cookieParser = require('cookie-parser');
-const cors = require('cors');
 require('dotenv').config();
 
 //const MagApp = require('./app');
 
 const app = express();
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
+app.options('*', cors());
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -36,6 +43,3 @@ app.use(passport.session());
 app.use(loginRouter);
 app.use('/user', checkUserLogin(), userRouter);
 app.use(magRouter);
-app.use(cors({
-  origin: '*', // oppure '*' per testing
-}));
