@@ -24,7 +24,7 @@ const ListaPezzi = () => {
 
   // Carica i dati dal backend quando il componente è montato
   useEffect(() => {
-    fetch('/pezzi-db')  // Modifica questo URL con quello del tuo backend
+    fetch('https://a-lservice-production-39a8.up.railway.app/pezzi-db')  // Modifica questo URL con quello del tuo backend
       .then((response) => response.json())  // Converte la risposta in JSON
       .then((data) => {
         setPezzi(data);  // Imposta i dati nel state
@@ -39,7 +39,7 @@ const ListaPezzi = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Sei sicuro di voler eliminare questo pezzo?')) {
       try {
-        await fetch(`/elimina-pezzi-db/${id}`, {
+        await fetch(`https://a-lservice-production-39a8.up.railway.app/elimina-pezzi-db/${id}`, {
           method: 'DELETE',
         });
         setPezzi(pezzi.filter(p => p._id !== id));
@@ -60,7 +60,7 @@ const ListaPezzi = () => {
 
   const handleUpdate = async (id) => {
     try {
-      const response = await fetch(`/pezzi-db/${id}`, {
+      const response = await fetch(`https://a-lservice-production-39a8.up.railway.app/pezzi-db/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

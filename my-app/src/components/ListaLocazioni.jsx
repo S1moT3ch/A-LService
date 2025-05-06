@@ -8,7 +8,7 @@ const ListaLocazioni = ({ refreshTrigger }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/locazione-db')  // Modifica questo URL con quello del tuo backend
+    fetch('https://a-lservice-production-39a8.up.railway.app/locazione-db')  // Modifica questo URL con quello del tuo backend
       .then((response) => response.json())  // Converte la risposta in JSON
       .then((data) => {
         setLocazioni(data);  // Imposta i dati nel state
@@ -24,7 +24,7 @@ const ListaLocazioni = ({ refreshTrigger }) => {
   const deleteLocazione = async (id) => {
     if (window.confirm('Sei sicuro di voler eliminare questo pezzo?')) {
       try {
-        await fetch(`/elimina-locazioni-db/${id}`, {
+        await fetch(`https://a-lservice-production-39a8.up.railway.app/elimina-locazioni-db/${id}`, {
           method: 'DELETE',
         });
         setLocazioni(locazioni.filter(l => l._id !== id));

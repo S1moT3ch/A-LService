@@ -13,7 +13,7 @@ const FormPezzo = ({ onSaved }) => {
   const [pezzi, setPezzi] = useState([]); // 👈 Aggiungiamo un array locale
 
   useEffect(() => {
-    fetch('https://a-lservice-production-39a8.up.railway.app/locazione-db')
+    fetch('https://a-lservice-production-39a8.up.railway.app/locazione-db')  // Modifica questo URL con quello del tuo backend
       .then((response) => response.json())  // Converte la risposta in JSON
       .then((data) => {
         setLocazioni(data);  // Imposta i dati nel state
@@ -67,7 +67,7 @@ const FormPezzo = ({ onSaved }) => {
       const formData = new FormData();
       formData.append('file', jsonFile, 'pezzi.json');
   
-      const response = await fetch('/pezzi-db', {
+      const response = await fetch('https://a-lservice-production-39a8.up.railway.app/pezzi-db', {
         method: 'POST',
         body: formData,
       });
