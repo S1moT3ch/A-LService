@@ -37,5 +37,5 @@ app.use(loginRouter);
 app.use('/user', checkUserLogin(), userRouter);
 app.use(magRouter);
 app.use(cors({
-  origin: 'https://al-management.vercel.app/', // oppure '*' per testing
+  origin: '*', // oppure '*' per testing
 }));
