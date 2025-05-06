@@ -12,6 +12,8 @@ import FormLocazione from './components/FormLocazione';
 import ListaLocazioni from './components/ListaLocazioni';
 import './components/style/FormApp.css';
 
+import Home from './components/Home';
+
 const handleClick = () => {
   window.history.back();
 };
@@ -75,6 +77,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route
           path="/user/dashboard/magazzino"
           element={<MagazzinoPage />}
