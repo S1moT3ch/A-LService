@@ -13,7 +13,7 @@ const FormPezzo = ({ onSaved }) => {
   const [pezzi, setPezzi] = useState([]); // 👈 Aggiungiamo un array locale
 
   useEffect(() => {
-    fetch('/locazione-db')  // Modifica questo URL con quello del tuo backend
+    fetch('https://a-lservice-production-39a8.up.railway.app/locazione-db')
       .then((response) => response.json())  // Converte la risposta in JSON
       .then((data) => {
         setLocazioni(data);  // Imposta i dati nel state

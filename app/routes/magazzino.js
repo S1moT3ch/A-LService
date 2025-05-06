@@ -188,12 +188,12 @@ router.post('/locazione-db', async (req, res) => {
   }
 
   try {
-    const username = req.cookies.username.username;
+    //const username = req.cookies.username.username;
 
     const nuovaLocazione = {
       nome: nome.trim(),
       creatoIl: new Date(),
-      inseritoDa: username
+      //inseritoDa: username
     };
 
     

@@ -4,6 +4,7 @@ const passport = require('passport');
 const path = require('path');
 const checkUserLogin = require('./app/middleware/check-user-login');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 require('dotenv').config();
 
 //const MagApp = require('./app');
@@ -35,3 +36,6 @@ app.use(passport.session());
 app.use(loginRouter);
 app.use('/user', checkUserLogin(), userRouter);
 app.use(magRouter);
+app.use(cors({
+  origin: 'https://al-management.vercel.app/', // oppure '*' per testing
+}));
