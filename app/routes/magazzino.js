@@ -67,11 +67,11 @@ router.post('/pezzi-db', upload.single('file'), async (req, res) => {
     const fileBuffer = req.file.buffer;
     const jsonString = fileBuffer.toString('utf8');
     const pezzo = JSON.parse(jsonString);
-    const username = req.cookies.username.username;
+    //const username = req.cookies.username.username;
 
     pezzo.forEach(p => {
       p.creatoIl = new Date();
-      p.inseritoDa = username; // Aggiungi l'utente che ha inserito il pezzo
+      //p.inseritoDa = username; // Aggiungi l'utente che ha inserito il pezzo
     });
     
     pezzi.insertMany(pezzo);
