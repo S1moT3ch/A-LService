@@ -63,9 +63,9 @@ router.get('/logout', (req,res) => {
       });
 });
 
-router.get('*', (req, res) => {
-  res.render('home');
-})
+//router.get('*', (req, res) => {
+  //res.render('home');
+//})
 
 
 module.exports = router;

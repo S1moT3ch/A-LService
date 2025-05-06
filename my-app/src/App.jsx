@@ -7,6 +7,7 @@ import {
   
   import ListaPezzi from './components/ListaPezzi';
   import FormPezzo from './components/FormPezzo';
+  import Home from './components/Home';
   
   const MagazzinoPage = () => {
     const [refresh, setRefresh] = useState(false);
@@ -22,6 +23,7 @@ import {
     return (
       <Router>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route
             path="/user/dashboard/magazzino"
             element={<MagazzinoPage />}
