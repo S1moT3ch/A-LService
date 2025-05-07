@@ -8,6 +8,7 @@ import {
   import ListaPezzi from './components/ListaPezzi';
   import FormPezzo from './components/FormPezzo';
   import Home from './components/Home';
+  import Login from './components/Login';
   import { useState } from 'react';
   
   const MagazzinoPage = () => {
@@ -26,6 +27,7 @@ import {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route
             path="/user/dashboard/magazzino"
             element={<MagazzinoPage />}

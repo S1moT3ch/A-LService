@@ -7,6 +7,7 @@ import {
 import React, { useState } from 'react';
 
 import Home from './components/Home';
+import Login from './components/Login';
 
 import ListaPezzi from './components/ListaPezzi';
 import FormPezzo from './components/FormPezzo';
@@ -79,6 +80,7 @@ function App() {
     <Router>
       <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
         <Route
           path="/user/dashboard/magazzino"
           element={<MagazzinoPage />}
