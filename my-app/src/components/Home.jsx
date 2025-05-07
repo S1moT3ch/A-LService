@@ -12,6 +12,7 @@ export default function Home() {
   }, []);
 
   return (
+    <div className="home-background">
     <div className="container">
       <img src="/images/Logo_full.png" alt="Logo Acoustic&Light" className="logo" />
 
@@ -29,6 +30,7 @@ export default function Home() {
       <footer className="footer">
         <p>&copy; 2025 Acoustic&Light. Tutti i diritti riservati.</p>
       </footer>
+    </div>
     </div>
   );
 }
