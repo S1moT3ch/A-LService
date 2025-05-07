@@ -16,7 +16,7 @@ export default function Home() {
     <div className="container">
       <img src="/images/Logo_full.png" alt="Logo Acoustic&Light" className="logo" />
 
-      <header className="header">
+      <header className="header-home">
         <h1 className="title">Acoustic&Light</h1>
         <p className="subtitle">
           Soluzioni professionali <br /> per ambienti sonori e luminosi
