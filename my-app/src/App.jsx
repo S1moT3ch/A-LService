@@ -9,6 +9,7 @@ import {
   import FormPezzo from './components/FormPezzo';
   import Home from './components/Home';
   import Login from './components/Login';
+  import Dashboard from './components/Dashboard';
   import { useState } from 'react';
   
   const MagazzinoPage = () => {
@@ -28,6 +29,7 @@ import {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/user/dashboard" element={<Dashboard />} />
           <Route
             path="/user/dashboard/magazzino"
             element={<MagazzinoPage />}

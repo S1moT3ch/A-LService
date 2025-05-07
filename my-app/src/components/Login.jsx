@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import './style/styleLogin.css';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
   const [formData, setFormData] = useState({ username: '', password: '' });
+  const navigate = useNavigate();
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -29,7 +32,7 @@ const Login = () => {
 
       if (response.ok) {
         // ✅ Login corretto (puoi anche reindirizzare o salvare token)
-        console.log('Login success');
+        navigate(`/user/dashboard`);
         setShowError(false);
         // Esempio: window.location.href = '/dashboard';
       } else {

@@ -1,0 +1,129 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #f5f5f5;
+  }
+
+  .barra {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    color:#ffffff;
+    padding: 10px 20px;
+    background-color: #5aafc7;
+    font-size: 150%;
+  }
+
+  .caption {
+    justify-self: start; /* forza il testo completamente a sinistra */
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .logo {
+    justify-self: end; /* forza il logo completamente a destra */
+    width: 100px;
+    height: auto;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    height: 100vh;
+  }
+  
+  h1 {
+    margin-bottom: 30px;
+  }
+  
+  .benvenuto {
+    background-color: #ecf0f1; /* Colore di sfondo chiaro */
+    color: #34495e; /* Testo scuro per buon contrasto */
+    font-family: 'Arial', sans-serif; /* Font moderno */
+    font-size: 26px; /* Testo abbastanza grande per un benvenuto visibile */
+    text-align: center; /* Centra il testo */
+    padding: 30px; /* Aggiunge un po' di spazio attorno al testo */
+    border-radius: 12px; /* Angoli arrotondati */
+    max-width: 80%; /* Limita la larghezza */
+    margin: 0 auto; /* Centra il contenitore */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Ombra leggera per dare profondità */
+    transition: transform 0.3s ease-in-out; /* Transizione fluida per effetto hover */
+  }
+
+  /* Stili generali per il contenitore dei pulsanti */
+.azioni-container {
+  display: flex; /* Usa il flexbox per disporre i pulsanti */
+  flex-direction: column; /* Imposta i pulsanti in colonna */
+  align-items: center; /* Centra i pulsanti orizzontalmente */
+  margin-top: 50px; /* Spazio in alto */
+}
+
+/* Stili per i pulsanti */
+.azione-btn {
+  background-color: #3498db; /* Colore di sfondo blu */
+  color: white; /* Colore del testo bianco */
+  border: none; /* Rimuove il bordo predefinito */
+  border-radius: 8px; /* Angoli arrotondati */
+  font-size: 18px; /* Dimensione del testo */
+  padding: 15px 30px; /* Spaziatura interna */
+  margin: 10px; /* Distanza tra i pulsanti */
+  cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+  transition: all 0.3s ease; /* Transizione morbida per gli effetti */
+}
+
+/* Stile per il passaggio del mouse (hover) */
+.azione-btn:hover {
+  background-color: #2980b9; /* Cambia il colore di sfondo quando si passa sopra il pulsante */
+  transform: scale(1.05); /* Effetto di ingrandimento */
+}
+
+/* Stile per quando il pulsante è premuto */
+.azione-btn:active {
+  background-color: #1abc9c; /* Cambia colore quando il pulsante viene premuto */
+  transform: scale(0.98); /* Diminuisce leggermente la dimensione */
+}
+
+/* Stili per il contenitore del pulsante logout */
+.uscita {
+  display: flex;
+  justify-content: center; /* Centra il pulsante orizzontalmente */
+  align-items: center; /* Centra il pulsante verticalmente */
+  margin-top: 20px; /* Distanza dal contenuto sopra */
+}
+
+/* Stili per il pulsante di logout */
+.logout-btn {
+  background-color: #e74c3c; /* Colore di sfondo rosso */
+  color: white; /* Colore del testo bianco */
+  border: none; /* Rimuove il bordo predefinito */
+  border-radius: 10px; /* Angoli arrotondati */
+  font-size: 18px; /* Dimensione del testo */
+  padding: 12px 25px; /* Spaziatura interna */
+  cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+  transition: all 0.3s ease; /* Transizione morbida per gli effetti */
+}
+
+/* Stile per il passaggio del mouse (hover) */
+.logout-btn:hover {
+  background-color: #c0392b; /* Colore di sfondo più scuro al passaggio del mouse */
+  transform: scale(1.05); /* Ingrossa il pulsante */
+}
+
+/* Stile per quando il pulsante è premuto */
+.logout-btn:active {
+  background-color: #e74c3c; /* Ritorna al colore originale quando viene premuto */
+  transform: scale(0.98); /* Diminuisce leggermente la dimensione */
+}
+
+/* Stile aggiuntivo per un'animazione di "saluto" */
+.logout-btn:focus {
+  outline: none; /* Rimuove la linea di contorno quando il pulsante è in focus */
+  box-shadow: 0 0 5px rgba(231, 76, 60, 0.8); /* Aggiunge un'ombra blu per un effetto di focus */
+}

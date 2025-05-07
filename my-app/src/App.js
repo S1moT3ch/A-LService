@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 
 import Home from './components/Home';
 import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 
 import ListaPezzi from './components/ListaPezzi';
 import FormPezzo from './components/FormPezzo';
@@ -81,6 +82,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/user/dashboard" element={<Dashboard />} />
         <Route
           path="/user/dashboard/magazzino"
           element={<MagazzinoPage />}
