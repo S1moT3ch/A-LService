@@ -4,23 +4,41 @@ import './style/styleLogin.css';
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [formData, setFormData] = useState({ username: '', password: '' });
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
 
-  // Simulazione gestione submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // In un'app reale qui faresti una chiamata API
-    const fakeUsername = e.target.username.value;
-    const fakePassword = e.target.password.value;
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    if (fakeUsername !== 'admin' || fakePassword !== '1234') {
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('https://a-lservice-production-39a8.up.railway.app/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // ✅ Login corretto (puoi anche reindirizzare o salvare token)
+        console.log('Login success');
+        setShowError(false);
+        // Esempio: window.location.href = '/dashboard';
+      } else {
+        // ❌ Login fallito
+        setShowError(true);
+      }
+    } catch (error) {
+      console.error('Errore nella richiesta:', error);
       setShowError(true);
-    } else {
-      setShowError(false);
-      // Redirect o logica post-login
     }
   };
 
@@ -46,7 +64,8 @@ const Login = () => {
         <h1>Effettua l'accesso</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="username">Username</label>
-          <input type="text" name="username" required /><br /><br />
+          <input type="text" name="username" value={formData.username}
+            onChange={handleChange} required /><br /><br />
 
           <div className="password-wrapper">
             <label htmlFor="password">Password</label>
@@ -54,6 +73,8 @@ const Login = () => {
               type={showPassword ? 'text' : 'password'}
               name="password"
               id="pwd"
+              value={formData.password}
+              onChange={handleChange}
               required
             /><br /><br />
           </div>
