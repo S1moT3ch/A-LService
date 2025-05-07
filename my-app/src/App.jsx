@@ -8,6 +8,7 @@ import {
   import ListaPezzi from './components/ListaPezzi';
   import FormPezzo from './components/FormPezzo';
   import Home from './components/Home';
+  import { useState } from 'react';
   
   const MagazzinoPage = () => {
     const [refresh, setRefresh] = useState(false);
@@ -19,14 +20,6 @@ import {
     );
   };
 
-  const Home = () => {
-    const [refresh, setRefresh] = useState(false);
-    return (
-      <div className="max-w-4xl mx-auto">
-        <Home key={refresh} />
-      </div>
-    );
-  };
   
   function App() {
     return (

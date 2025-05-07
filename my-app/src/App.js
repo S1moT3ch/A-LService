@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import React, { useState } from 'react';
 
+import Home from './components/Home';
+
 import ListaPezzi from './components/ListaPezzi';
 import FormPezzo from './components/FormPezzo';
 import FormLocazione from './components/FormLocazione';
@@ -76,6 +78,7 @@ function App() {
   return (
     <Router>
       <Routes>
+      <Route path="/" element={<Home />} />
         <Route
           path="/user/dashboard/magazzino"
           element={<MagazzinoPage />}
