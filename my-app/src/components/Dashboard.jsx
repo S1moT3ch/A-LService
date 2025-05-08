@@ -2,11 +2,11 @@ import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import "./style/styleDashboard.css";
 import { useNavigate } from 'react-router-dom';
-const navigate = useNavigate();
 
 const Dashboard = () => {
   // Funzione per estrarre "nome" dal percorso (es: /user/dashboard/nome=Mario)
   const location = useLocation();
+  const navigate = useNavigate();
 
   const getNomeFromPath = () => {
     const path = location.pathname;
