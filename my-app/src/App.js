@@ -84,13 +84,21 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route 
-          path="/user/dashboard" 
-          element={<PrivateRoute element={<Dashboard />} />} 
-      />
-      <Route 
-          path="/user/dashboard/magazzino" 
-          element={<PrivateRoute element={<MagazzinoPage />} />} 
-      />
+  path="/user/dashboard" 
+  element={
+    <PrivateRoute>
+      <Dashboard />
+    </PrivateRoute>
+  }
+/>
+<Route 
+  path="/user/dashboard/magazzino" 
+  element={
+    <PrivateRoute>
+      <MagazzinoPage />
+    </PrivateRoute>
+  }
+/>
       </Routes>
     </Router>
   );
