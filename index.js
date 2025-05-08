@@ -18,6 +18,17 @@ app.use(cors({
 }));
 app.options('https://al-management.vercel.app', cors());
 
+app.use(session({
+  secret: 'chiaveSegreta123',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+    maxAge: 1000 * 60 * 60 * 24 // 24 ore
+  }
+}));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -34,16 +45,7 @@ app.set('views', './app/views');
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/app/public')));
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
-      secret: 'chiaveSegreta123',
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',  // Usa 'true' solo in produzione (HTTPS)
-        maxAge: 1000 * 60 * 60 * 24 // 24 ore
-      }
-  }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(loginRouter);
