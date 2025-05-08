@@ -5,6 +5,7 @@ import {
   Navigate
 } from 'react-router-dom';
 import React, { useState } from 'react';
+import PrivateRoute from './components/PrivateRoute';
 
 import Home from './components/Home';
 import Login from './components/Login';
@@ -82,11 +83,14 @@ function App() {
       <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/user/dashboard" element={<Dashboard />} />
-        <Route
-          path="/user/dashboard/magazzino"
-          element={<MagazzinoPage />}
-        />
+      <Route 
+          path="/user/dashboard" 
+          element={<PrivateRoute element={<Dashboard />} />} 
+      />
+      <Route 
+          path="/user/dashboard/magazzino" 
+          element={<PrivateRoute element={<Dashboard />} />} 
+      />
       </Routes>
     </Router>
   );

@@ -5,6 +5,7 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 const dataPath = path.join(__dirname, '../json/temp.json');
+const authMiddleware = require('../middleware/check-user-login');
 
 
 router.get('/dashboard/nome=:username', (req, res) => {
@@ -28,7 +29,9 @@ router.get('/dashboard/nome=:username', (req, res) => {
     });
   });
   
-
+router.get('/user/dashboard', authMiddleware, (req, res) => {
+  res.send('Benvenuto nella tua Dashboard!');
+});
 
 
 router.get('/dashboard-2', (req,res) =>{
