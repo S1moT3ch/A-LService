@@ -34,7 +34,7 @@ router.get('/user/dashboard', authMiddleware, (req, res) => {
     return res.status(401).json({ message: 'Non autorizzato' });
   }
   // Se l'utente è autenticato, continua e restituisci i dati
-  res.status(200).json({ message: 'Benvenuto alla dashboard!' });
+  res.json({ message: 'Benvenuto nella dashboard!', user: req.user });
 });
 
 
