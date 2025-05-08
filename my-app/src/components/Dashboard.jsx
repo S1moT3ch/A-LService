@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import "./style/styleDashboard.css";
+const navigate = useNavigate();
 
 const Dashboard = () => {
   // Funzione per estrarre "nome" dal percorso (es: /user/dashboard/nome=Mario)
@@ -11,6 +12,24 @@ const Dashboard = () => {
     const regex = /\/user\/dashboard\/nome=([^/]+)/;
     const match = path.match(regex);
     return match ? decodeURIComponent(match[1]) : null;
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('https://a-lservice-production-39a8.up.railway.app/logout', {
+        method: 'GET',
+        credentials: 'include', // per inviare i cookie
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok && result.success) {
+        // Reindirizza o azzera stato
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error('Errore durante il logout:', error);
+    }
   };
 
   //const nomeUtente = getNomeFromPath();
@@ -40,11 +59,7 @@ const Dashboard = () => {
       </div>
 
       <div className="uscita">
-        <Link to="/logout">
-          <button className="logout-btn" id="logout">
-            Logout
-          </button>
-        </Link>
+        <button classname="logout-btn" onClick={handleLogout}>Logout</button>
       </div>
     </div>
   );
