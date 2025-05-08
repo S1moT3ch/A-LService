@@ -1,6 +1,7 @@
 const passport = require ('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const { emit } = require('process');
 const fs = require('fs');
 const path = require('path');
@@ -67,7 +68,9 @@ passport.serializeUser((user, done) =>{
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await userdb.findOne({ _id: new ObjectId(id) });
+    // Usa direttamente ObjectId se l'id è una stringa in formato esadecimale
+    const user = await userdb.findOne({  _id: id  });
+    console.log(user);
     done(null, user);
   } catch (err) {
     done(err);
