@@ -38,11 +38,6 @@ app.use(session({
       secret: 'chiaveSegreta123',
       resave: false,
       saveUninitialized: false,
-      cookie: {
-        secure: true,           // metti true solo se sei in HTTPS
-        httpOnly: true,
-        sameSite: 'none'          // o 'none' se domini diversi e in HTTPS
-      }
   }));
 app.use(passport.initialize());
 app.use(passport.session());
