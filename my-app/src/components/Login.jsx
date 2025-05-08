@@ -28,17 +28,17 @@ const Login = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
+        credentials: 'include',
       });
 
-      if (response.ok) {
-        // ✅ Login corretto (puoi anche reindirizzare o salvare token)
-        navigate(`/user/dashboard`);
-        setShowError(false);
-        // Esempio: window.location.href = '/dashboard';
-      } else {
-        // ❌ Login fallito
-        setShowError(true);
-      }
+      const result = await response.json();
+
+    if (response.ok && result.success) {
+      navigate('/user/dashboard/');
+      setShowError(false);
+    } else {
+      setShowError(true);
+    }
     } catch (error) {
       console.error('Errore nella richiesta:', error);
       setShowError(true);
