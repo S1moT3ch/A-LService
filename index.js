@@ -12,9 +12,9 @@ require('dotenv').config();
 const app = express();
 app.use(cors({
   origin: 'https://al-management.vercel.app',
+  credentials: true,
   methods: ['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT'],
   allowedHeaders: ['Content-Type'],
-  credentials: true
 }));
 app.options('https://al-management.vercel.app', cors());
 
