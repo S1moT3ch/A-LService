@@ -11,11 +11,12 @@ require('dotenv').config();
 
 const app = express();
 app.use(cors({
-  origin: '*',
+  origin: 'https://al-management.vercel.app/',
   methods: ['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT'],
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type'],
+  credentials: true
 }));
-app.options('*', cors());
+app.options('https://al-management.vercel.app/', cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
