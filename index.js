@@ -38,6 +38,11 @@ app.use(session({
       secret: 'chiaveSegreta123',
       resave: false,
       saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',  // Usa 'true' solo in produzione (HTTPS)
+        maxAge: 1000 * 60 * 60 * 24 // 24 ore
+      }
   }));
 app.use(passport.initialize());
 app.use(passport.session());
