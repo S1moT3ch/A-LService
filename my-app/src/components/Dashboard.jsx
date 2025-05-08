@@ -15,22 +15,33 @@ const Dashboard = () => {
     return match ? decodeURIComponent(match[1]) : null;
   };
 
-  const handleLogout = async () => {
-    try {
-      const response = await fetch('https://a-lservice-production-39a8.up.railway.app/logout', {
-        method: 'GET',
-        credentials: 'include', // per inviare i cookie
-      });
+  const Logout = () => {
+    const navigate = useNavigate();
   
-      const result = await response.json();
+    const handleLogout = async () => {
+      try {
+        const response = await fetch('https://a-lservice-production-39a8.up.railway.app/logout', {
+          method: 'GET',
+          credentials: 'include', // Includi i cookie per mantenere la sessione
+        });
   
-      if (response.ok && result.success) {
-        // Reindirizza o azzera stato
-        navigate('/login');
+        if (response.ok) {
+          // Se il logout è stato eseguito con successo, redirigi l'utente alla pagina di login
+          navigate('/login');
+        } else {
+          console.error('Errore nel logout');
+        }
+      } catch (error) {
+        console.error('Errore nella richiesta di logout:', error);
       }
-    } catch (error) {
-      console.error('Errore durante il logout:', error);
-    }
+    };
+  
+    // Effettua il logout automaticamente quando il componente viene montato
+    React.useEffect(() => {
+      handleLogout();
+    }, []);
+  
+    return null; // Questo componente non ha bisogno di renderizzare nulla
   };
 
   //const nomeUtente = getNomeFromPath();
@@ -60,7 +71,7 @@ const Dashboard = () => {
       </div>
 
       <div className="uscita">
-        <button className="logout-btn" id="logout" onClick={handleLogout}>Logout</button>
+        <button className="logout-btn" id="logout" onClick={Logout}>Logout</button>
       </div>
     </div>
   );

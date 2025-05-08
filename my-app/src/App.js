@@ -89,7 +89,7 @@ function App() {
       />
       <Route 
           path="/user/dashboard/magazzino" 
-          element={<PrivateRoute element={<Dashboard />} />} 
+          element={<PrivateRoute element={<MagazzinoPage />} />} 
       />
       </Routes>
     </Router>

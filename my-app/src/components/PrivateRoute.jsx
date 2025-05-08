@@ -1,34 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const PrivateRoute = ({ element }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(null); // Stato per memorizzare lo stato di autenticazione
+  const navigate = useNavigate(); // Usa il hook di React Router per la navigazione
 
   useEffect(() => {
     // Verifica se l'utente è autenticato facendo una richiesta al backend
     const checkAuthentication = async () => {
       try {
-        const response = await fetch('https://a-lservice-production-39a8.up.railway.app/user/dashboard', {
+        const response = await fetch('https://example.com/user/dashboard', {
           method: 'GET',
-          credentials: 'include', // Include i cookie per la gestione della sessione
+          credentials: 'include', // Includi il cookie per la sessione
         });
 
-        if (response.ok) {
-          setIsAuthenticated(true);
-        } else {
+        if (response.status === 401) {
           setIsAuthenticated(false);
+          navigate('/login'); // Reindirizza alla pagina di login se non autenticato
+        } else {
+          setIsAuthenticated(true);
         }
       } catch (error) {
-        console.error('Errore nella verifica dell\'autenticazione:', error);
+        console.error('Errore durante la verifica dell\'autenticazione:', error);
         setIsAuthenticated(false);
+        navigate('/login'); // In caso di errore, reindirizza al login
       }
     };
 
-    checkAuthentication();
-  }, []);
+    checkAuthentication(); // Chiamata per verificare l'autenticazione
+  }, [navigate]); // Aggiungi `navigate` come dipendenza per evitare loop infiniti
 
   if (isAuthenticated === null) {
-    // Caricamento mentre si verifica l'autenticazione
+    // Mostra un caricamento mentre si verifica l'autenticazione
     return <div>Loading...</div>;
   }
 
