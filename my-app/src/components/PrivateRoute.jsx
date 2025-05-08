@@ -9,7 +9,7 @@ const PrivateRoute = ({ element }) => {
     // Verifica se l'utente è autenticato facendo una richiesta al backend
     const checkAuthentication = async () => {
       try {
-        const response = await fetch('https://example.com/user/dashboard', {
+        const response = await fetch('https://a-lservice-production-39a8.up.railway.app/user/dashboard', {
           method: 'GET',
           credentials: 'include', // Includi il cookie per la sessione
         });

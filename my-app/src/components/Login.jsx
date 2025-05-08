@@ -18,32 +18,29 @@ const Login = () => {
   };
 
   
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch('https://a-lservice-production-39a8.up.railway.app/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-        credentials: 'include',
-      });
-
-      const result = await response.json();
-
-    if (response.ok && result.success) {
-      navigate('/user/dashboard/');
-      setShowError(false);
-    } else {
-      setShowError(true);
-    }
-    } catch (error) {
-      console.error('Errore nella richiesta:', error);
-      setShowError(true);
-    }
-  };
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('https://a-lservice-production-39a8.up.railway.app/api/check-auth', {
+          credentials: 'include',
+        });
+  
+        const data = await response.json();
+  
+        if (response.ok && data.authenticated) {
+          // Utente autenticato: salva info utente se serve
+        } else {
+          // Non autenticato: reindirizza o mostra login
+          navigate('/login');
+        }
+      } catch (err) {
+        console.error('Errore durante la verifica autenticazione:', err);
+        navigate('/login');
+      }
+    };
+  
+    checkAuth();
+  }, []);
 
   return (
     <div
