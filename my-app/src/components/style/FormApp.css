@@ -27,6 +27,10 @@
     margin-bottom: 30px;
   }
 
+  hr {
+    border-width: 0px;
+  }
+
   .btn-toggle {
     background-color: #4caf50;
     color: white;
