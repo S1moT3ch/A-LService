@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './style/styleLogin.css';
@@ -17,30 +17,54 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  
+  // 🔐 Verifica autenticazione al mount
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const response = await fetch('https://a-lservice-production-39a8.up.railway.app/api/check-auth', {
           credentials: 'include',
         });
-  
+
         const data = await response.json();
-  
+
         if (response.ok && data.authenticated) {
-          // Utente autenticato: salva info utente se serve
-        } else {
-          // Non autenticato: reindirizza o mostra login
-          navigate('/login');
+          navigate('/user/dashboard/');
         }
       } catch (err) {
         console.error('Errore durante la verifica autenticazione:', err);
-        navigate('/login');
       }
     };
-  
+
     checkAuth();
-  }, []);
+  }, [navigate]);
+
+  // ✅ Funzione di login
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('https://a-lservice-production-39a8.up.railway.app/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        credentials: 'include',
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setShowError(false);
+        navigate('/user/dashboard/');
+      } else {
+        setShowError(true);
+      }
+    } catch (error) {
+      console.error('Errore nella richiesta:', error);
+      setShowError(true);
+    }
+  };
 
   return (
     <div
@@ -49,7 +73,6 @@ const Login = () => {
         backgroundImage: 'url("/images/sfondo_login_2.jpg")',
         backgroundSize: 'cover',
         minHeight: '100vh',
-    
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
@@ -58,14 +81,20 @@ const Login = () => {
       <div className="header">
         <img src="/images/Logo_full.png" alt="Logo AL" className="logo" />
         <h1 className="caption">Gestionale di A&L</h1>
-    </div>
+      </div>
 
       <div className="login-container">
         <h1>Effettua l'accesso</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="username">Username</label>
-          <input type="text" name="username" value={formData.username}
-            onChange={handleChange} required /><br /><br />
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+          <br /><br />
 
           <div className="password-wrapper">
             <label htmlFor="password">Password</label>
@@ -76,7 +105,8 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               required
-            /><br /><br />
+            />
+            <br /><br />
           </div>
 
           <div className="show-password">
