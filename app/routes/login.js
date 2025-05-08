@@ -69,6 +69,9 @@ router.post('/login', (req, res, next) => {
   });
 
   router.get('/api/check-auth', (req, res) => {
+    console.log("Sessione:", req.session);
+    console.log("Utente:", req.user);
+
     if (req.isAuthenticated()) {
         res.json({ authenticated: true, user: req.user });
     } else {

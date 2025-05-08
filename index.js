@@ -35,9 +35,14 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/app/public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-    secret: 'chiaveSegreta123',
-    saveUninitialized: false,
-    resave: false
+      secret: 'chiaveSegreta123',
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        secure: true,           // metti true solo se sei in HTTPS
+        httpOnly: true,
+        sameSite: 'none'          // o 'none' se domini diversi e in HTTPS
+      }
   }));
 app.use(passport.initialize());
 app.use(passport.session());
