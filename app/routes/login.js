@@ -68,7 +68,8 @@ router.post('/login', (req, res, next) => {
     });
   });
 
-  app.get('/api/check-auth', (req, res) => {
+
+  router.get('/api/check-auth', (req, res) => {
     if (req.isAuthenticated()) {
       res.sendStatus(200);
     } else {
