@@ -68,7 +68,7 @@ passport.serializeUser((user, done) =>{
 
 passport.deserializeUser((id, done) => {
     // Recupero untente in db
-    const user = getUserById(id); // pseudocodice
+    const user = { id: 1, username: 'Simone'};
     done(null, user);
 });
 
