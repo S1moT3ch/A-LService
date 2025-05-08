@@ -43,14 +43,18 @@ router.post('/login', (req, res, next) => {
               maxAge: 3600000, // Tempo di vita del cookie in millisecondi (1 ora in questo caso)
               httpOnly: false,  // Per impedire che JavaScript acceda al cookie
               secure: false    // Impostato su true solo se il sito è in HTTPS
+              
+            });
+
+            return res.status(200).json({
+              success: true,
+              message: 'Login riuscito',
+              username: nome.username
             });
 
           } catch (parseErr) {
-            console.error("Errore parsing JSON:", parseErr);
-            return res.redirect('/login');
+            return res.status(500).json({ success: false, message: 'Errore parsing JSON' });
           }
-  
-          return res.redirect('/user/dashboard/nome=' + nome.username);
         });
       });
     })(req, res, next);
