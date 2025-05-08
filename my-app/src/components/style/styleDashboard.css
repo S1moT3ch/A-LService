@@ -108,6 +108,8 @@
   padding: 12px 25px; /* Spaziatura interna */
   cursor: pointer; /* Cambia il cursore al passaggio del mouse */
   transition: all 0.3s ease; /* Transizione morbida per gli effetti */
+  width: auto;
+  padding: 10px 20px;
 }
 
 /* Stile per il passaggio del mouse (hover) */
