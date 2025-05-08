@@ -10,6 +10,7 @@ require('dotenv').config();
 //const MagApp = require('./app');
 
 const app = express();
+app.set('trust proxy', 1);
 app.use(cors({
   origin: 'https://al-management.vercel.app',
   credentials: true,
@@ -24,8 +25,9 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: false,
-    maxAge: 1000 * 60 * 60 * 24 // 24 ore
+    secure: true,
+    maxAge: 1000 * 60 * 60 * 24, // 24 ore
+    sameSite: 'None',
   }
 }));
 

@@ -68,16 +68,13 @@ router.post('/login', (req, res, next) => {
     });
   });
 
-  router.get('/api/check-auth', (req, res) => {
-    console.log("Sessione:", req.session);
-    console.log("Utente:", req.user);
-
+  app.get('/api/check-auth', (req, res) => {
     if (req.isAuthenticated()) {
-        res.json({ authenticated: true, user: req.user });
+      res.sendStatus(200);
     } else {
-        res.status(401).json({ authenticated: false });
+      res.sendStatus(401);
     }
-});
+  });
 
 //router.get('*', (req, res) => {
   //res.render('home');
