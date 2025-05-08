@@ -95,6 +95,7 @@
     padding: 6px 12px;
     margin: 6px;
     cursor: pointer;
+    width: auto;
     border-radius: 6px;
     font-size: 14px;
     transition: background-color 0.3s ease;
@@ -158,16 +159,19 @@
   background-color: #4caf50; /* Salva - verde */
   margin: 6px;
   color: white;
+  width: auto;
 }
 
 .lista-container button:nth-child(2) {
   background-color: #b3d3f1; /* Cancella - rosso */
   margin: 6px;
   color: white;
+  width: auto;
 }
 
 .lista-container button:nth-child(3) {
   background-color: #1909aa; /* Modifica - blu */
   margin: 6px;
   color: white;
+  width: auto;
 }
