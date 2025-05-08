@@ -50,9 +50,8 @@ passport.use(
             }
             if(utenteTrovato){
               utenteTrovato = false;
-              const user = { id: 1, username: 'Simone'};
               fs.writeFileSync(filePath, JSON.stringify({ username }), 'utf8');
-              return done(null, user);
+              return done(null, userc);
             }
             return done(null, false);
           } 
