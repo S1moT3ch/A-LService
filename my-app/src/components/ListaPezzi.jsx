@@ -210,7 +210,7 @@ const ListaPezzi = () => {
                 {editData.noleggiato && (
                 <input
                 type="text"
-                placeholder="Noleggiato a"
+                placeholder="A chi?"
                 value={editData.noleggiatoA}
                 onChange={(e) =>
                 setEditData({ ...editData, noleggiatoA: e.target.value })
@@ -232,7 +232,7 @@ const ListaPezzi = () => {
               <td className="th-noleggiato">
                 {p.noleggiato ? (
                 <span style={{ color: 'limegreen', fontWeight: 'bold' }}>
-                  ✅ {p.noleggiatoA ? `→ ${p.noleggiatoA}` : ''}
+                  ✅ {p.noleggiatoA ? `${p.noleggiatoA}` : ''}
                 </span>
               ) : (
                 <span style={{ color: 'orangered', fontWeight: 'bold' }}>❌</span>
