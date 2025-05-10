@@ -6,7 +6,13 @@ const ListaPezzi = () => {
   const [loading, setLoading] = useState(true);  // Stato per il caricamento
   const [error, setError] = useState(null);  // Stato per errori
   const [editPezzoId, setEditPezzoId] = useState(null);
-  const [editData, setEditData] = useState({ nome: '', quantita: '', locazione: '', noleggiato: false });
+  const [editData, setEditData] = useState({
+    nome: '',
+    quantita: '',
+    locazione: '',
+    noleggiato: false,
+    noleggiatoA: ''
+  });
   const [locazioni, setLocazioni] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -60,7 +66,8 @@ const ListaPezzi = () => {
       nome: pezzo.nome,
       quantita: pezzo.quantita,
       locazione: pezzo.locazione || '',
-      noleggiato: pezzo.noleggiato || false
+      noleggiato: pezzo.noleggiato || false,
+      noleggiatoA: pezzo.noleggiatoA || ''
     });
   };
 
@@ -188,12 +195,29 @@ const ListaPezzi = () => {
                   ))}
                 </select>
               </td>
-              <td>
+              <td className="th-noleggiato">
+                  <input
+                  type="checkbox"
+                  checked={editData.noleggiato}
+                  onChange={(e) =>
+                    setEditData({
+                    ...editData,
+                    noleggiato: e.target.checked,
+                    noleggiatoA: e.target.checked ? editData.noleggiatoA : '' // pulisci se deselezionato
+                    })
+                  }
+                  />
+                {editData.noleggiato && (
                 <input
-                type="checkbox"
-                checked={editData.noleggiato}
-                onChange={(e) => setEditData({ ...editData, noleggiato: e.target.checked })}
+                type="text"
+                placeholder="A chi?"
+                value={editData.noleggiatoA}
+                onChange={(e) =>
+                setEditData({ ...editData, noleggiatoA: e.target.value })
+                }
+                style={{ marginTop: '4px', display: 'block', width: '100%' }}
                 />
+                )}
               </td>
               <td>
                 <button onClick={() => handleUpdate(p._id)}>💾</button>

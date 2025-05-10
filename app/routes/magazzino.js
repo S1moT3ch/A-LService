@@ -258,7 +258,7 @@ router.delete('/elimina-locazioni-db/:id', async (req, res) => {
 
 router.put('/pezzi-db/:id', async (req, res) => {
   const id = req.params.id;
-  const { nome, quantita, locazione, noleggiato } = req.body;
+  const { nome, quantita, locazione, noleggiato, noleggiatoA } = req.body;
 
   try {
     const pezzoEsistente = await pezzi.findOne({
@@ -267,18 +267,18 @@ router.put('/pezzi-db/:id', async (req, res) => {
       locazione: locazione
     });
 
+    const noleggiatoValue = !!noleggiato;
+    const noleggiatoADato = noleggiatoValue ? noleggiatoA || '' : null;
+
     if (pezzoEsistente) {
       // Esiste già un altro pezzo con stesso nome e locazione
 
-      // 1. Somma le quantità
-      const nuovaQuantita = pezzoEsistente.quantita + parseInt(quantita);
-
-      // 2. Aggiorna il pezzo esistente con nuova quantità
       await pezzi.updateOne(
         { _id: pezzoEsistente._id },
         {
           $set: {
-            noleggiato: noleggiato,
+            noleggiato: noleggiatoValue,
+            noleggiatoA: noleggiatoADato,
             modificatoIl: new Date()
           },
           $inc: {
@@ -287,7 +287,6 @@ router.put('/pezzi-db/:id', async (req, res) => {
         }
       );
 
-      // 3. Elimina il pezzo con l'ID corrente
       await pezzi.deleteOne({ _id: new ObjectId(id) });
 
       return res.status(200).json({ message: 'Pezzi unificati: quantità aggiornata e duplicato rimosso' });
@@ -301,7 +300,8 @@ router.put('/pezzi-db/:id', async (req, res) => {
             nome,
             quantita: parseInt(quantita),
             locazione,
-            noleggiato,
+            noleggiato: noleggiatoValue,
+            noleggiatoA: noleggiatoADato,
             modificatoIl: new Date()
           }
         }
