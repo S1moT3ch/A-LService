@@ -36,11 +36,6 @@ const Dashboard = () => {
       }
     };
   
-    // Effettua il logout automaticamente quando il componente viene montato
-    React.useEffect(() => {
-      handleLogout();
-    }, []);
-  
     return null; // Questo componente non ha bisogno di renderizzare nulla
   };
 
