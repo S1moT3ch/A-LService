@@ -76,7 +76,7 @@ router.post('/pezzi-db', upload.single('file'), async (req, res) => {
     });
 
     const promises = pezzi.map(p => {
-      return db.collection('pezzi').updateOne(
+      return pezzi.updateOne(
         { nome: p.nome, locazione: p.locazione }, // Trova un pezzo con lo stesso nome e locazione
         {
           $inc: { quantita: p.quantita }, // Incrementa la quantità se il pezzo esiste
