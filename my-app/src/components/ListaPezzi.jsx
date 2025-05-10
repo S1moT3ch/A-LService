@@ -11,7 +11,8 @@ const ListaPezzi = () => {
     quantita: '',
     locazione: '',
     noleggiato: false,
-    noleggiatoA: ''
+    noleggiatoA: '',
+    quantitaModifica: ''
   });
   const [locazioni, setLocazioni] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -85,7 +86,7 @@ const ListaPezzi = () => {
   // Se ci sono cambiamenti rilevanti (nome, quantità, locazione, noleggio)
   if (nomeDiverso || quantitaDiversa || locazioneDiversa || noleggioDiverso) {
     // Se la locazione è cambiata e la quantità è stata ridotta
-    if (locazioneDiversa && nuovaQuantita < pezzoOriginale.quantita) {
+    if (locazioneDiversa && nuovaQuantita < pezzoOriginale.quantita || noleggioDiverso) {
       const quantitaRimanente = pezzoOriginale.quantita - nuovaQuantita;
       const payload = {
         idOriginale: id,
@@ -190,8 +191,8 @@ const ListaPezzi = () => {
                 <input
                 type="number"
                 placeholder="Quantità da modificare"
-                value={editData.quantita}
-                onChange={(e) => setEditData({ ...editData, quantita: e.target.value })}
+                value={editData.editData.quantitaModifica}
+                onChange={(e) => setEditData({ ...editData, quantitaModifica: e.target.value })}
               />
               </td>
               <td>
