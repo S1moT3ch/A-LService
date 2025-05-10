@@ -75,8 +75,8 @@ const ListaPezzi = () => {
 
   const handleUpdate = async (id) => {
   const pezzoOriginale = pezzi.find(p => p._id === id);
-  const nuovaQuantita = parseInt(editData.quantita);
-  
+  const nuovaQuantita = parseInt(editData.quantitaModifica || 0);
+
   // Verifica se ci sono cambiamenti nei dati
   const nomeDiverso = editData.nome !== pezzoOriginale.nome;
   const quantitaDiversa = nuovaQuantita !== pezzoOriginale.quantita;
@@ -191,7 +191,7 @@ const ListaPezzi = () => {
                 <input
                 type="number"
                 placeholder="Quantità da modificare"
-                value={editData.editData.quantitaModifica}
+                value={editData.quantitaModifica || ''}
                 onChange={(e) => setEditData({ ...editData, quantitaModifica: e.target.value })}
               />
               </td>
