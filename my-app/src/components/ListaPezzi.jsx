@@ -66,22 +66,57 @@ const ListaPezzi = () => {
 
 
   const handleUpdate = async (id) => {
-    try {
-      const response = await fetch(`https://a-lservice-production-39a8.up.railway.app/pezzi-db/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(editData)
-      });
+    const pezzoOriginale = pezzi.find(p => p._id === id);
+    const nuovaQuantita = parseInt(editData.quantita);
   
-      if (!response.ok) throw new Error('Errore nel salvataggio');
+    // Se locazione è cambiata e quantità è inferiore all'originale
+    if (
+      editData.locazione !== pezzoOriginale.locazione &&
+      nuovaQuantita < pezzoOriginale.quantita
+    ) {
+      const quantitaRimanente = pezzoOriginale.quantita - nuovaQuantita;
   
-      // aggiorna la lista localmente
-      setPezzi(pezzi.map(p => p._id === id ? { ...p, ...editData } : p));
-      setEditPezzoId(null); // chiudi la modalità modifica
-    } catch (err) {
-      alert('Errore durante la modifica');
+      const payload = {
+        idOriginale: id,
+        nuovaQuantita: nuovaQuantita,
+        nuovaLocazione: editData.locazione,
+        quantitaRimanente: quantitaRimanente
+      };
+  
+      try {
+        const response = await fetch(`https://a-lservice-production-39a8.up.railway.app/pezzi-db/sposta-pezzo`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+  
+        if (!response.ok) throw new Error('Errore nello spostamento');
+  
+        const updatedList = await response.json(); // supponiamo che ritorni l’elenco aggiornato
+        setPezzi(updatedList);
+        setEditPezzoId(null);
+      } catch (err) {
+        alert('Errore durante lo spostamento del pezzo.');
+      }
+  
+    } else {
+      // Comportamento standard
+      try {
+        const response = await fetch(`https://a-lservice-production-39a8.up.railway.app/pezzi-db/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(editData)
+        });
+  
+        if (!response.ok) throw new Error('Errore nel salvataggio');
+  
+        setPezzi(pezzi.map(p => p._id === id ? { ...p, ...editData } : p));
+        setEditPezzoId(null);
+      } catch (err) {
+        alert('Errore durante la modifica');
+      }
     }
   };
 
