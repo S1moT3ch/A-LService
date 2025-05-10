@@ -15,27 +15,22 @@ const Dashboard = () => {
     return match ? decodeURIComponent(match[1]) : null;
   };
 
-  const Logout = async()=> {
-    const navigate = useNavigate();
+const Logout = async () => {
+  try {
+    const response = await fetch('https://a-lservice-production-39a8.up.railway.app/logout', {
+      method: 'GET',
+      credentials: 'include',
+    });
 
-      try {
-        const response = await fetch('https://a-lservice-production-39a8.up.railway.app/logout', {
-          method: 'GET',
-          credentials: 'include', // Includi i cookie per mantenere la sessione
-        });
-  
-        if (response.ok) {
-          // Se il logout è stato eseguito con successo, redirigi l'utente alla pagina di login
-          navigate('/login');
-        } else {
-          console.error('Errore nel logout');
-        }
-      } catch (error) {
-        console.error('Errore nella richiesta di logout:', error);
-      }
-  
-    return null; // Questo componente non ha bisogno di renderizzare nulla
-  };
+    if (response.ok) {
+      navigate('/login');
+    } else {
+      console.error('Errore nel logout');
+    }
+  } catch (error) {
+    console.error('Errore nella richiesta di logout:', error);
+  }
+};
 
   //const nomeUtente = getNomeFromPath();
 
