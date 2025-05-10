@@ -191,7 +191,7 @@ const ListaPezzi = () => {
                 <input
                 type="number"
                 placeholder="Quantità da modificare"
-                value={editData.quantitaModifica || ''}
+                value={editData.quantitaModifica || ''}A
                 onChange={(e) => setEditData({ ...editData, quantitaModifica: e.target.value })}
               />
               </td>
