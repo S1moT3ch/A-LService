@@ -323,6 +323,7 @@ router.post('/pezzi-db/sposta-pezzo', async (req, res) => {
   const { idOriginale, nuovaQuantita, nuovaLocazione, quantitaRimanente } = req.body;
 
   try {
+
     const db = client.db("Magazzino");
     const pezzoOriginale = await db.collection('pezzi').findOne({ _id: new ObjectId(idOriginale) });
 
@@ -330,29 +331,43 @@ router.post('/pezzi-db/sposta-pezzo', async (req, res) => {
       return res.status(404).json({ error: 'Pezzo non trovato' });
     }
 
-    // 1. Inserisci nuovo pezzo con nuova locazione e quantità spostata
-    const nuovoPezzo = {
+    // Cerca se esiste già un pezzo con stesso nome e nuova locazione
+    const pezzoEsistente = await db.collection('pezzi').findOne({
       nome: pezzoOriginale.nome,
-      quantita: nuovaQuantita,
       locazione: nuovaLocazione,
       noleggiato: pezzoOriginale.noleggiato
-    };
+    });
 
-    await db.collection('pezzi').insertOne(nuovoPezzo);
+    if (pezzoEsistente) {
+      // Se esiste, aggiorna la sua quantità
+      await db.collection('pezzi').updateOne(
+        { _id: pezzoEsistente._id },
+        { $inc: { quantita: nuovaQuantita } }
+      );
+    } else {
+      // Altrimenti crea un nuovo pezzo
+      const nuovoPezzo = {
+        nome: pezzoOriginale.nome,
+        quantita: nuovaQuantita,
+        locazione: nuovaLocazione,
+        noleggiato: pezzoOriginale.noleggiato
+      };
+      await db.collection('pezzi').insertOne(nuovoPezzo);
+    }
 
-    // 2. Aggiorna il pezzo originale con la quantità rimanente
+    // Aggiorna la quantità del pezzo originale
     await db.collection('pezzi').updateOne(
       { _id: new ObjectId(idOriginale) },
       { $set: { quantita: quantitaRimanente } }
     );
 
-    // ritorna la lista aggiornata
+    // Ritorna elenco aggiornato
     const updatedList = await db.collection('pezzi').find().toArray();
     res.json(updatedList);
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Errore nello spostamento' });
+    res.status(500).json({ error: 'Errore nello spostamento/aggiornamento' });
   }
 });
 
