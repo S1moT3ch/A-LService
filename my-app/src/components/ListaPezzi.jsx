@@ -72,6 +72,12 @@ const ListaPezzi = () => {
 
 
   const handleUpdate = async (id) => {
+    const pezzo = pezzi.find(p => p._id === id);
+    if (!pezzo) {
+      alert("Pezzo non trovato");
+      return;
+    }
+  
     try {
       const response = await fetch(`https://a-lservice-production-39a8.up.railway.app/pezzi-db/${id}`, {
         method: 'PUT',
@@ -79,21 +85,31 @@ const ListaPezzi = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          ...p,
+          nome: editData.nome,
           quantita: editData.quantitaModifica
             ? Number(editData.quantitaModifica)
             : 0,
-          locazione: editData.locazione || p.locazione,
-          noleggiato: editData.noleggiato,
-          nome: editData.nome
+          locazione: editData.locazione || pezzo.locazione,
+          noleggiato: editData.noleggiato
         })
       });
   
       if (!response.ok) throw new Error('Errore nel salvataggio');
   
-      // aggiorna la lista localmente
-      setPezzi(pezzi.map(p => p._id === id ? { ...p, ...editData } : p));
-      setEditPezzoId(null); // chiudi la modalità modifica
+      setPezzi(pezzi.map(p =>
+        p._id === id
+          ? {
+              ...p,
+              nome: editData.nome,
+              quantita: editData.quantitaModifica
+                ? Number(editData.quantitaModifica)
+                : p.quantita,
+              locazione: editData.locazione || p.locazione,
+              noleggiato: editData.noleggiato
+            }
+          : p
+      ));
+      setEditPezzoId(null);
     } catch (err) {
       alert('Errore durante la modifica');
     }
