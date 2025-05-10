@@ -6,7 +6,8 @@
   
   /* Container for the list to make it centered and add padding */
   .lista-container {
-    max-width: 800px;
+    overflow-x: auto;
+    max-width: 100%;
     margin: 20px auto;
     padding: 20px;
     background-color: #f9f9f9;
@@ -27,6 +28,7 @@
   table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: auto;
   }
   
   /* Table headers */
@@ -135,8 +137,8 @@
 }
 
 input[type="checkbox"]:disabled {
-  filter: contrast(150%);
-  opacity: 0.6;
+  accent-color: orange;
+  opacity: 1;
   cursor: not-allowed;
 }
 
