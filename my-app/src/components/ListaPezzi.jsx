@@ -167,11 +167,11 @@ const ListaPezzi = () => {
               <td>{p.quantita}</td>
               <td>{p.locazione || 'N/A'}</td>
               <td>
-                <input
-                type="checkbox"
-                checked={p.noleggiato || false}
-                disabled
-                />
+                {p.noleggiato ? (
+                <span style={{ color: 'limegreen', fontWeight: 'bold' }}>✅</span>
+                ) : (
+                <span style={{ color: 'orangered', fontWeight: 'bold' }}>❌</span>
+                )}
               </td>
               <td>
                 <button onClick={() => startEdit(p)}>✏️</button>
