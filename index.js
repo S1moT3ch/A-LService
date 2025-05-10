@@ -17,7 +17,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT'],
   allowedHeaders: ['Content-Type'],
 }));
-app.options('https://al-management.vercel.app', cors());
+app.options('*', cors());
 
 app.use(session({
   secret: 'chiaveSegreta123',
