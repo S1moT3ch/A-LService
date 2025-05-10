@@ -86,7 +86,6 @@ router.post('/pezzi-db', upload.single('file'), async (req, res) => {
             locazione: p.locazione,
             noleggiato: p.noleggiato,
             creatoIl: p.creatoIl,
-            quantita: p.quantita
           }
         },
         { upsert: true } // Se il pezzo non esiste, verrà creato un nuovo documento
