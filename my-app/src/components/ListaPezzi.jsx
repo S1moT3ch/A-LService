@@ -8,6 +8,7 @@ const ListaPezzi = () => {
   const [editPezzoId, setEditPezzoId] = useState(null);
   const [editData, setEditData] = useState({ nome: '', quantita: '', locazione: '', noleggiato: false });
   const [locazioni, setLocazioni] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
       fetch('https://a-lservice-production-39a8.up.railway.app/locazione-db')  // Modifica questo URL con quello del tuo backend
@@ -96,6 +97,14 @@ const ListaPezzi = () => {
   return (
     <div className="lista-container">
       <h2>Lista Pezzi</h2>
+      <div className="search-bar">
+        <input
+        type="text"
+        placeholder="Cerca per nome..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <table>
         <thead>
           <tr>
@@ -112,7 +121,9 @@ const ListaPezzi = () => {
               <td colSpan="3" className="empty-message">Nessun pezzo disponibile</td>
             </tr>
           ) : (
-            pezzi.map(p => (
+            pezzi
+            .filter(p => p.nome.toLowerCase().includes(searchTerm.toLowerCase()))
+            .map(p => (
               <tr key={p._id}>
                 {editPezzoId === p._id ? (
                 <>

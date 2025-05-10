@@ -23,6 +23,26 @@
     margin-bottom: 20px;
     font-weight: bold;
   }
+
+  .search-bar {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .search-bar input {
+    padding: 8px 12px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .search-bar input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+    outline: none;
+  }
   
   /* Table styles */
   table {
