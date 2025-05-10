@@ -15,10 +15,9 @@ const Dashboard = () => {
     return match ? decodeURIComponent(match[1]) : null;
   };
 
-  const Logout = () => {
+  const Logout = async()=> {
     const navigate = useNavigate();
-  
-    const handleLogout = async () => {
+
       try {
         const response = await fetch('https://a-lservice-production-39a8.up.railway.app/logout', {
           method: 'GET',
@@ -34,7 +33,6 @@ const Dashboard = () => {
       } catch (error) {
         console.error('Errore nella richiesta di logout:', error);
       }
-    };
   
     return null; // Questo componente non ha bisogno di renderizzare nulla
   };
