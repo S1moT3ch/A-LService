@@ -323,6 +323,7 @@ router.post('/pezzi-db/sposta-pezzo', async (req, res) => {
   const { idOriginale, nuovaQuantita, nuovaLocazione, quantitaRimanente } = req.body;
 
   try {
+    const db = client.db("Magazzino");
     const pezzoOriginale = await db.collection('pezzi').findOne({ _id: new ObjectId(idOriginale) });
 
     if (!pezzoOriginale) {
