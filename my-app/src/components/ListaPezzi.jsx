@@ -6,13 +6,7 @@ const ListaPezzi = () => {
   const [loading, setLoading] = useState(true);  // Stato per il caricamento
   const [error, setError] = useState(null);  // Stato per errori
   const [editPezzoId, setEditPezzoId] = useState(null);
-  const [editData, setEditData] = useState({
-    nome: '',
-    quantita: '',
-    locazione: '',
-    noleggiato: false,
-    quantitaModifica: ''
-  });
+  const [editData, setEditData] = useState({ nome: '', quantita: '', locazione: '', noleggiato: false });
   const [locazioni, setLocazioni] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -72,44 +66,20 @@ const ListaPezzi = () => {
 
 
   const handleUpdate = async (id) => {
-    const pezzo = pezzi.find(p => p._id === id);
-    if (!pezzo) {
-      alert("Pezzo non trovato");
-      return;
-    }
-  
     try {
       const response = await fetch(`https://a-lservice-production-39a8.up.railway.app/pezzi-db/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          nome: editData.nome,
-          quantita: editData.quantitaModifica
-            ? Number(editData.quantitaModifica)
-            : 0,
-          locazione: editData.locazione || pezzo.locazione,
-          noleggiato: editData.noleggiato
-        })
+        body: JSON.stringify(editData)
       });
   
       if (!response.ok) throw new Error('Errore nel salvataggio');
   
-      setPezzi(pezzi.map(p =>
-        p._id === id
-          ? {
-              ...p,
-              nome: editData.nome,
-              quantita: editData.quantitaModifica
-                ? Number(editData.quantitaModifica)
-                : p.quantita,
-              locazione: editData.locazione || p.locazione,
-              noleggiato: editData.noleggiato
-            }
-          : p
-      ));
-      setEditPezzoId(null);
+      // aggiorna la lista localmente
+      setPezzi(pezzi.map(p => p._id === id ? { ...p, ...editData } : p));
+      setEditPezzoId(null); // chiudi la modalità modifica
     } catch (err) {
       alert('Errore durante la modifica');
     }
@@ -123,21 +93,6 @@ const ListaPezzi = () => {
   if (error) {
     return <div>Errore nel caricamento dei dati: {error.message}</div>;  // Messaggio in caso di errore
   }
-
-  // Raggruppa i pezzi per nome e locazione
-const pezziAggregati = pezzi.reduce((acc, pezzo) => {
-  const key = `${pezzo.nome}__${pezzo.locazione || ''}`;
-  if (!acc[key]) {
-    acc[key] = { ...pezzo };
-  } else {
-    acc[key].quantita = Number(acc[key].quantita) + Number(pezzo.quantita);
-  }
-  return acc;
-}, {});
-
-const pezziDaMostrare = Object.values(pezziAggregati).filter(p =>
-  p.nome.toLowerCase().includes(searchTerm.toLowerCase())
-);
 
   return (
     <div className="lista-container">
@@ -166,7 +121,9 @@ const pezziDaMostrare = Object.values(pezziAggregati).filter(p =>
               <td colSpan="3" className="empty-message">Nessun pezzo disponibile</td>
             </tr>
           ) : (
-            pezziDaMostrare.map(p => (
+            pezzi
+            .filter(p => p.nome.toLowerCase().includes(searchTerm.toLowerCase()))
+            .map(p => (
               <tr key={p._id}>
                 {editPezzoId === p._id ? (
                 <>
@@ -177,12 +134,10 @@ const pezziDaMostrare = Object.values(pezziAggregati).filter(p =>
               />
               </td>
               <td>
-              <div style={{ marginBottom: '4px' }}>Totale: {p.quantita}</div>
                 <input
                 type="number"
-                placeholder="Quantità da modificare"
-                value={editData.quantitaModifica}
-                onChange={(e) => setEditData({ ...editData, quantitaModifica: e.target.value })}
+                value={editData.quantita}
+                onChange={(e) => setEditData({ ...editData, quantita: e.target.value })}
               />
               </td>
               <td>

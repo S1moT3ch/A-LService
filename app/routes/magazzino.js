@@ -66,18 +66,37 @@ router.post('/pezzi-db', upload.single('file'), async (req, res) => {
     // Recuperiamo il contenuto del file
     const fileBuffer = req.file.buffer;
     const jsonString = fileBuffer.toString('utf8');
-    const pezzo = JSON.parse(jsonString);
-    //const username = req.cookies.username.username;
+    const pezzi = JSON.parse(jsonString);  // Assumiamo che `pezzi` sia un array di oggetti
 
-    pezzo.forEach(p => {
+    // Ogni pezzo viene aggiornato con i campi aggiuntivi necessari
+    pezzi.forEach(p => {
       p.noleggiato = false;
       p.creatoIl = new Date();
-      //p.inseritoDa = username; // Aggiungi l'utente che ha inserito il pezzo
+      // p.inseritoDa = username; // Puoi aggiungere l'utente che ha inserito il pezzo, se necessario
     });
-    
-    pezzi.insertMany(pezzo);
-    res.status(201).json({ messaggio: 'Pezzo inserito' });
 
+    const promises = pezzi.map(p => {
+      return db.collection('pezzi').updateOne(
+        { nome: p.nome, locazione: p.locazione }, // Trova un pezzo con lo stesso nome e locazione
+        {
+          $inc: { quantita: p.quantita }, // Incrementa la quantità se il pezzo esiste
+          $setOnInsert: { // Aggiungi questi valori solo se il pezzo non esiste
+            nome: p.nome,
+            locazione: p.locazione,
+            noleggiato: p.noleggiato,
+            creatoIl: p.creatoIl,
+            quantita: p.quantita
+          }
+        },
+        { upsert: true } // Se il pezzo non esiste, verrà creato un nuovo documento
+      );
+    });
+
+    // Eseguiamo tutte le operazioni contemporaneamente
+    await Promise.all(promises);
+
+    res.status(201).json({ messaggio: 'Pezzi inseriti o aggiornati con successo' });
+    
   } catch (err) {
     console.error('Errore durante l\'inserimento:', err);
     res.status(500).json({ errore: 'Errore del server' });
