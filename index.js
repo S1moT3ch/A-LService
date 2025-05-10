@@ -12,7 +12,7 @@ require('dotenv').config();
 const app = express();
 app.set('trust proxy', 1);
 app.use(cors({
-  origin: 'https://al-management.vercel.app',
+  origin: '*',
   credentials: true,
   methods: ['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT'],
   allowedHeaders: ['Content-Type'],
