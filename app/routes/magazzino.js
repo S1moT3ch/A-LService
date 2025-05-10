@@ -239,7 +239,7 @@ router.delete('/elimina-locazioni-db/:id', async (req, res) => {
 
 router.put('/pezzi-db/:id', async (req, res) => {
   const id = req.params.id;
-  const { nome, quantita, locazione } = req.body;
+  const { nome, quantita, locazione, noleggiato } = req.body;
   //const username = req.cookies.username.username;
 
   try {
