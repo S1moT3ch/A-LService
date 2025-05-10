@@ -6,7 +6,13 @@ const ListaPezzi = () => {
   const [loading, setLoading] = useState(true);  // Stato per il caricamento
   const [error, setError] = useState(null);  // Stato per errori
   const [editPezzoId, setEditPezzoId] = useState(null);
-  const [editData, setEditData] = useState({ nome: '', quantita: '', locazione: '', noleggiato: false });
+  const [editData, setEditData] = useState({
+    nome: '',
+    quantita: '',
+    locazione: '',
+    noleggiato: false,
+    quantitaModifica: ''
+  });
   const [locazioni, setLocazioni] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -72,7 +78,15 @@ const ListaPezzi = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(editData)
+        body: JSON.stringify({
+          ...p,
+          quantita: editData.quantitaModifica
+            ? Number(editData.quantitaModifica)
+            : 0,
+          locazione: editData.locazione || p.locazione,
+          noleggiato: editData.noleggiato,
+          nome: editData.nome
+        })
       });
   
       if (!response.ok) throw new Error('Errore nel salvataggio');
@@ -147,10 +161,12 @@ const pezziDaMostrare = Object.values(pezziAggregati).filter(p =>
               />
               </td>
               <td>
+              <div style={{ marginBottom: '4px' }}>Totale: {p.quantita}</div>
                 <input
                 type="number"
-                value={editData.quantita}
-                onChange={(e) => setEditData({ ...editData, quantita: e.target.value })}
+                placeholder="Quantità da modificare"
+                value={editData.quantitaModifica}
+                onChange={(e) => setEditData({ ...editData, quantitaModifica: e.target.value })}
               />
               </td>
               <td>
