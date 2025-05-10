@@ -134,6 +134,11 @@
   font-size: 14px;
 }
 
+input[type="checkbox"]:disabled {
+  accent-color: #444; /* colore più scuro */
+  opacity: 1;
+}
+
 .lista-container .empty-message {
   text-align: center;
   color: #777;
