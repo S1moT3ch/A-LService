@@ -35,6 +35,10 @@ const ListaPezzi = () => {
         setLoading(false);  // Imposta lo stato di caricamento su false
       });
   }, []);  // Il secondo argomento vuoto [] assicura che l'effetto venga eseguito solo una volta al montaggio
+  
+  useEffect(() => {
+    setPezzi(prev => prev.map(p => ({ ...p, noleggiato: p.noleggiato || false })));
+  }, []);
 
   const handleDelete = async (id) => {
     if (window.confirm('Sei sicuro di voler eliminare questo pezzo?')) {
@@ -54,8 +58,17 @@ const ListaPezzi = () => {
     setEditData({
       nome: pezzo.nome,
       quantita: pezzo.quantita,
-      locazione: pezzo.locazione || ''
+      locazione: pezzo.locazione || '',
+      noleggiato: pezzo.noleggiato || false
     });
+  };
+
+  const toggleNoleggiato = (id) => {
+    setPezzi(prev =>
+      prev.map(p =>
+        p._id === id ? { ...p, noleggiato: !p.noleggiato } : p
+      )
+    );
   };
 
   const handleUpdate = async (id) => {
@@ -96,6 +109,7 @@ const ListaPezzi = () => {
             <th>Nome</th>
             <th>Quantità</th>
             <th className="th-locazione">Locazione</th>
+            <th>Noleggiato</th>
             <th className="th-azioni">Azioni</th>
           </tr>
         </thead>
@@ -136,6 +150,13 @@ const ListaPezzi = () => {
                 </select>
               </td>
               <td>
+                <input
+                type="checkbox"
+                checked={editData.noleggiato}
+                onChange={(e) => setEditData({ ...editData, noleggiato: e.target.checked })}
+                />
+              </td>
+              <td>
                 <button onClick={() => handleUpdate(p._id)}>💾</button>
                 <button onClick={() => setEditPezzoId(null)}>❌</button>
               </td>
@@ -145,6 +166,13 @@ const ListaPezzi = () => {
               <td>{p.nome}</td>
               <td>{p.quantita}</td>
               <td>{p.locazione || 'N/A'}</td>
+              <td>
+                <input
+                type="checkbox"
+                checked={p.noleggiato || false}
+                disabled
+                />
+              </td>
               <td>
                 <button onClick={() => startEdit(p)}>✏️</button>
                 <button onClick={() => handleDelete(p._id)}>🗑️</button>
