@@ -259,19 +259,60 @@ router.delete('/elimina-locazioni-db/:id', async (req, res) => {
 router.put('/pezzi-db/:id', async (req, res) => {
   const id = req.params.id;
   const { nome, quantita, locazione, noleggiato } = req.body;
-  //const username = req.cookies.username.username;
 
   try {
-    const result = await pezzi.updateOne(
-      { _id: new ObjectId(id) },
-      { $set: { nome, quantita: parseInt(quantita), locazione, noleggiato, modificatoIl: new Date() } }
-    );
+    const pezzoEsistente = await pezzi.findOne({
+      _id: { $ne: new ObjectId(id) }, // Escludi il pezzo corrente
+      nome: nome,
+      locazione: locazione
+    });
 
-    if (result.matchedCount === 0) {
-      return res.status(404).json({ message: 'Pezzo non trovato' });
+    if (pezzoEsistente) {
+      // Esiste già un altro pezzo con stesso nome e locazione
+
+      // 1. Somma le quantità
+      const nuovaQuantita = pezzoEsistente.quantita + parseInt(quantita);
+
+      // 2. Aggiorna il pezzo esistente con nuova quantità
+      await pezzi.updateOne(
+        { _id: pezzoEsistente._id },
+        {
+          $set: {
+            noleggiato: noleggiato,
+            modificatoIl: new Date()
+          },
+          $inc: {
+            quantita: parseInt(quantita)
+          }
+        }
+      );
+
+      // 3. Elimina il pezzo con l'ID corrente
+      await pezzi.deleteOne({ _id: new ObjectId(id) });
+
+      return res.status(200).json({ message: 'Pezzi unificati: quantità aggiornata e duplicato rimosso' });
+
+    } else {
+      // Nessun duplicato: aggiorna normalmente
+      const result = await pezzi.updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            nome,
+            quantita: parseInt(quantita),
+            locazione,
+            noleggiato,
+            modificatoIl: new Date()
+          }
+        }
+      );
+
+      if (result.matchedCount === 0) {
+        return res.status(404).json({ message: 'Pezzo non trovato' });
+      }
+
+      return res.status(200).json({ message: 'Pezzo aggiornato correttamente' });
     }
-
-    res.status(200).json({ message: 'Pezzo aggiornato correttamente' });
   } catch (err) {
     console.error('Errore durante la PUT:', err);
     res.status(500).json({ error: 'Errore interno del server' });
