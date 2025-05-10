@@ -6,7 +6,7 @@ const ListaPezzi = () => {
   const [loading, setLoading] = useState(true);  // Stato per il caricamento
   const [error, setError] = useState(null);  // Stato per errori
   const [editPezzoId, setEditPezzoId] = useState(null);
-  const [editData, setEditData] = useState({ nome: '', quantita: '', locazione: '' });
+  const [editData, setEditData] = useState({ nome: '', quantita: '', locazione: '', noleggiato: false });
   const [locazioni, setLocazioni] = useState([]);
 
   useEffect(() => {
@@ -63,13 +63,6 @@ const ListaPezzi = () => {
     });
   };
 
-  const toggleNoleggiato = (id) => {
-    setPezzi(prev =>
-      prev.map(p =>
-        p._id === id ? { ...p, noleggiato: !p.noleggiato } : p
-      )
-    );
-  };
 
   const handleUpdate = async (id) => {
     try {

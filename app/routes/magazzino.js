@@ -244,7 +244,7 @@ router.put('/pezzi-db/:id', async (req, res) => {
   try {
     const result = await pezzi.updateOne(
       { _id: new ObjectId(id) },
-      { $set: { nome, quantita: parseInt(quantita), locazione, modificatoIl: new Date() } }
+      { $set: { nome, quantita: parseInt(quantita), locazione, noleggiato, modificatoIl: new Date() } }
     );
 
     if (result.matchedCount === 0) {
