@@ -135,8 +135,9 @@
 }
 
 input[type="checkbox"]:disabled {
-  accent-color: #444; /* colore più scuro */
-  opacity: 1;
+  filter: contrast(150%);
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .lista-container .empty-message {
