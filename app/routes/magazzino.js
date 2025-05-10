@@ -70,6 +70,7 @@ router.post('/pezzi-db', upload.single('file'), async (req, res) => {
     //const username = req.cookies.username.username;
 
     pezzo.forEach(p => {
+      p.noleggiato = false;
       p.creatoIl = new Date();
       //p.inseritoDa = username; // Aggiungi l'utente che ha inserito il pezzo
     });
