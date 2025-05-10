@@ -180,16 +180,16 @@ const ListaPezzi = () => {
                 {editPezzoId === p._id ? (
                 <>
               <td>
-                <div style={{ marginBottom: '4px' }}>Totale: {p.quantita}</div>
                 <input
-                placeholder="Quantità da modificare"
                 value={editData.nome}
                 onChange={(e) => setEditData({ ...editData, nome: e.target.value })}
               />
               </td>
               <td>
+                <div style={{ marginBottom: '4px' }}>Totale: {p.quantita}</div>
                 <input
                 type="number"
+                placeholder="Quantità da modificare"
                 value={editData.quantita}
                 onChange={(e) => setEditData({ ...editData, quantita: e.target.value })}
               />
