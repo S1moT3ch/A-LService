@@ -73,41 +73,47 @@ const ListaPezzi = () => {
 
 
   const handleUpdate = async (id) => {
-    const pezzoOriginale = pezzi.find(p => p._id === id);
-    const nuovaQuantita = parseInt(editData.quantita);
+  const pezzoOriginale = pezzi.find(p => p._id === id);
+  const nuovaQuantita = parseInt(editData.quantita);
   
-    // Se locazione è cambiata e quantità è inferiore all'originale
-    if (
-      editData.locazione !== pezzoOriginale.locazione &&
-      nuovaQuantita < pezzoOriginale.quantita
-    ) {
+  // Verifica se ci sono cambiamenti nei dati
+  const nomeDiverso = editData.nome !== pezzoOriginale.nome;
+  const quantitaDiversa = nuovaQuantita !== pezzoOriginale.quantita;
+  const locazioneDiversa = editData.locazione !== pezzoOriginale.locazione;
+  const noleggioDiverso = editData.noleggiato !== pezzoOriginale.noleggiato;
+
+  // Se ci sono cambiamenti rilevanti (nome, quantità, locazione, noleggio)
+  if (nomeDiverso || quantitaDiversa || locazioneDiversa || noleggioDiverso) {
+    // Se la locazione è cambiata e la quantità è stata ridotta
+    if (locazioneDiversa && nuovaQuantita < pezzoOriginale.quantita) {
       const quantitaRimanente = pezzoOriginale.quantita - nuovaQuantita;
-  
       const payload = {
         idOriginale: id,
         nuovaQuantita: nuovaQuantita,
         nuovaLocazione: editData.locazione,
-        quantitaRimanente: quantitaRimanente
+        quantitaRimanente: quantitaRimanente,
+        noleggiato: editData.noleggiato, // Aggiungi il controllo sul noleggio
+        noleggiatoA: editData.noleggiatoA // Aggiungi a chi è stato noleggiato (se applicabile)
       };
-  
+
       try {
-        const response = await fetch(`https://a-lservice-production-39a8.up.railway.app/pezzi-db/sposta-pezzo`, {
+        const response = await fetch('https://a-lservice-production-39a8.up.railway.app/pezzi-db/sposta-pezzo', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-  
+
         if (!response.ok) throw new Error('Errore nello spostamento');
-  
-        const updatedList = await response.json(); // supponiamo che ritorni l’elenco aggiornato
+
+        const updatedList = await response.json();
         setPezzi(updatedList);
         setEditPezzoId(null);
       } catch (err) {
         alert('Errore durante lo spostamento del pezzo.');
       }
-  
+
     } else {
-      // Comportamento standard
+      // Comportamento standard: aggiorna i dati del pezzo
       try {
         const response = await fetch(`https://a-lservice-production-39a8.up.railway.app/pezzi-db/${id}`, {
           method: 'PUT',
@@ -116,16 +122,20 @@ const ListaPezzi = () => {
           },
           body: JSON.stringify(editData)
         });
-  
+
         if (!response.ok) throw new Error('Errore nel salvataggio');
-  
+
+        // Aggiorna il pezzo nella lista
         setPezzi(pezzi.map(p => p._id === id ? { ...p, ...editData } : p));
         setEditPezzoId(null);
       } catch (err) {
         alert('Errore durante la modifica');
       }
     }
-  };
+  } else {
+    alert('Nessun cambiamento da salvare');
+  }
+};
 
 
   if (loading) {
