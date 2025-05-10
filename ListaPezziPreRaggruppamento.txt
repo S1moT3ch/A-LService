@@ -94,21 +94,6 @@ const ListaPezzi = () => {
     return <div>Errore nel caricamento dei dati: {error.message}</div>;  // Messaggio in caso di errore
   }
 
-  // Raggruppa i pezzi per nome e locazione
-const pezziAggregati = pezzi.reduce((acc, pezzo) => {
-  const key = `${pezzo.nome}__${pezzo.locazione || ''}`;
-  if (!acc[key]) {
-    acc[key] = { ...pezzo };
-  } else {
-    acc[key].quantita = Number(acc[key].quantita) + Number(pezzo.quantita);
-  }
-  return acc;
-}, {});
-
-const pezziDaMostrare = Object.values(pezziAggregati).filter(p =>
-  p.nome.toLowerCase().includes(searchTerm.toLowerCase())
-);
-
   return (
     <div className="lista-container">
       <h2>Lista Pezzi</h2>
@@ -136,7 +121,9 @@ const pezziDaMostrare = Object.values(pezziAggregati).filter(p =>
               <td colSpan="3" className="empty-message">Nessun pezzo disponibile</td>
             </tr>
           ) : (
-            pezziDaMostrare.map(p => (
+            pezzi
+            .filter(p => p.nome.toLowerCase().includes(searchTerm.toLowerCase()))
+            .map(p => (
               <tr key={p._id}>
                 {editPezzoId === p._id ? (
                 <>
