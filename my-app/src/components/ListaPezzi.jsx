@@ -109,7 +109,7 @@ const ListaPezzi = () => {
             <th>Nome</th>
             <th>Quantità</th>
             <th className="th-locazione">Locazione</th>
-            <th>Noleggiato</th>
+            <th className="th-noleggiato">Noleggiato</th>
             <th className="th-azioni">Azioni</th>
           </tr>
         </thead>
@@ -166,7 +166,7 @@ const ListaPezzi = () => {
               <td>{p.nome}</td>
               <td>{p.quantita}</td>
               <td>{p.locazione || 'N/A'}</td>
-              <td>
+              <td className="th-noleggiato">
                 {p.noleggiato ? (
                 <span style={{ color: 'limegreen', fontWeight: 'bold' }}>✅</span>
                 ) : (
