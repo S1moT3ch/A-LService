@@ -64,6 +64,7 @@ router.post('/pezzi-db', upload.single('file'), async (req, res) => {
     }
 
     // Recuperiamo il contenuto del file
+    const username = req.cookies.username;
     const fileBuffer = req.file.buffer;
     const jsonString = fileBuffer.toString('utf8');
     const pezzi = JSON.parse(jsonString);  // Assumiamo che `pezzi` sia un array di oggetti
@@ -72,7 +73,7 @@ router.post('/pezzi-db', upload.single('file'), async (req, res) => {
     pezzi.forEach(p => {
       p.noleggiato = false;
       p.creatoIl = new Date();
-      // p.inseritoDa = username; // Puoi aggiungere l'utente che ha inserito il pezzo, se necessario
+      p.inseritoDa = username; // Puoi aggiungere l'utente che ha inserito il pezzo, se necessario
     });
 
     const promises = pezzi.map(p => {
@@ -208,12 +209,12 @@ router.post('/locazione-db', async (req, res) => {
   }
 
   try {
-    //const username = req.cookies.username.username;
+    const username = req.cookies.username.username;
 
     const nuovaLocazione = {
       nome: nome.trim(),
       creatoIl: new Date(),
-      //inseritoDa: username
+      inseritoDa: username
     };
 
     
@@ -257,6 +258,7 @@ router.delete('/elimina-locazioni-db/:id', async (req, res) => {
 });
 
 router.put('/pezzi-db/:id', async (req, res) => {
+  
   const id = req.params.id;
   const { nome, quantita, locazione, noleggiato, noleggiatoA } = req.body;
 
@@ -269,6 +271,7 @@ router.put('/pezzi-db/:id', async (req, res) => {
 
     const noleggiatoValue = !!noleggiato;
     const noleggiatoADato = noleggiatoValue ? noleggiatoA || '' : null;
+    const username = req.cookies.username;
 
     if (pezzoEsistente) {
       // Esiste già un altro pezzo con stesso nome e locazione
@@ -279,7 +282,8 @@ router.put('/pezzi-db/:id', async (req, res) => {
           $set: {
             noleggiato: noleggiatoValue,
             noleggiatoA: noleggiatoADato,
-            modificatoIl: new Date()
+            modificatoIl: new Date(),
+            modificatoDa: username
           },
           $inc: {
             quantita: parseInt(quantita)
@@ -302,7 +306,8 @@ router.put('/pezzi-db/:id', async (req, res) => {
             locazione,
             noleggiato: noleggiatoValue,
             noleggiatoA: noleggiatoADato,
-            modificatoIl: new Date()
+            modificatoIl: new Date(),
+            modificatoDa: username
           }
         }
       );
@@ -326,6 +331,8 @@ router.post('/pezzi-db/sposta-pezzo', async (req, res) => {
 
     const db = client.db("Magazzino");
     const pezzoOriginale = await db.collection('pezzi').findOne({ _id: new ObjectId(idOriginale) });
+    const username = req.cookies.username;
+    
 
     if (!pezzoOriginale) {
       return res.status(404).json({ error: 'Pezzo non trovato' });
@@ -335,7 +342,8 @@ router.post('/pezzi-db/sposta-pezzo', async (req, res) => {
     const pezzoEsistente = await db.collection('pezzi').findOne({
       nome: pezzoOriginale.nome,
       locazione: nuovaLocazione,
-      noleggiato: pezzoOriginale.noleggiato
+      noleggiato: pezzoOriginale.noleggiato,
+      modificatoDa: username
     });
 
     if (pezzoEsistente) {
@@ -350,7 +358,8 @@ router.post('/pezzi-db/sposta-pezzo', async (req, res) => {
         nome: pezzoOriginale.nome,
         quantita: nuovaQuantita,
         locazione: nuovaLocazione,
-        noleggiato: pezzoOriginale.noleggiato
+        noleggiato: pezzoOriginale.noleggiato,
+        creatoDa: username
       };
       await db.collection('pezzi').insertOne(nuovoPezzo);
     }
