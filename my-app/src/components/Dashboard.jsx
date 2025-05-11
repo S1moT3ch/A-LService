@@ -1,4 +1,3 @@
-import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import "./style/styleDashboard.css";
 import { useNavigate } from 'react-router-dom';
