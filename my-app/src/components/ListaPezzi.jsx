@@ -341,6 +341,7 @@ const totaleGlobale = pezzi.reduce((acc, pezzo) => acc + pezzo.quantita, 0);
             ))
           )}
         </tbody>
+        {searchTerm === '' && (
         <tfoot>
           {Object.entries(totaliPerLocazione).map(([locazione, quantita]) => (
           <tr key={locazione} className="summary-row">
@@ -352,7 +353,15 @@ const totaleGlobale = pezzi.reduce((acc, pezzo) => acc + pezzo.quantita, 0);
             <td colSpan="1" style={{ fontWeight: 'bold', background: '#eee' }}>Totale complessivo</td>
             <td colSpan="4" style={{ background: '#eee' }}>{totaleGlobale}</td>
           </tr>
+          <tr>
+            <td colSpan="5" style={{ textAlign: 'right', fontWeight: 'bold', paddingTop: '10px' }}>
+              Totale righe mostrate: {
+              pezzi.filter(p => p.nome.toLowerCase().includes(searchTerm.toLowerCase())).length
+              }
+            </td>
+        </tr>
         </tfoot>
+        )}
       </table>
     </div>
   );
