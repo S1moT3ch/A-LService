@@ -191,6 +191,16 @@ const locazioniAnnidabili = new Set(
     .map(p => p.locazione)
 );
 
+// Raggruppa quantità per locazione
+const totaliPerLocazione = pezzi.reduce((acc, pezzo) => {
+  const loc = pezzo.locazione || 'Nessuna locazione';
+  acc[loc] = (acc[loc] || 0) + pezzo.quantita;
+  return acc;
+}, {});
+
+// Totale generale
+const totaleGlobale = pezzi.reduce((acc, pezzo) => acc + pezzo.quantita, 0);
+
 
   if (loading) {
     return <div>Caricamento in corso...</div>;  // Messaggio di caricamento
@@ -331,6 +341,18 @@ const locazioniAnnidabili = new Set(
             ))
           )}
         </tbody>
+        <tfoot>
+          {Object.entries(totaliPerLocazione).map(([locazione, quantita]) => (
+          <tr key={locazione} className="summary-row">
+            <td colSpan="1" style={{ fontWeight: 'bold' }}>Totale in "{locazione}"</td>
+            <td colSpan="4">{quantita}</td>
+          </tr>
+          ))}
+          <tr className="summary-total-global">
+            <td colSpan="1" style={{ fontWeight: 'bold', background: '#eee' }}>Totale complessivo</td>
+            <td colSpan="4" style={{ background: '#eee' }}>{totaleGlobale}</td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );
