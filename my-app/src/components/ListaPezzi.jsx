@@ -86,7 +86,7 @@ const ListaPezzi = () => {
   // Se ci sono cambiamenti rilevanti (nome, quantità, locazione, noleggio)
   if (nomeDiverso || quantitaDiversa || locazioneDiversa || noleggioDiverso) {
     // Se la locazione è cambiata e la quantità è stata ridotta
-    if (locazioneDiversa && nuovaQuantita < pezzoOriginale.quantita ) {
+    if (locazioneDiversa && nuovaQuantita < pezzoOriginale.quantita) {
       const quantitaRimanente = pezzoOriginale.quantita - nuovaQuantita;
       const payload = {
         idOriginale: id,
@@ -113,7 +113,36 @@ const ListaPezzi = () => {
         alert('Errore durante lo spostamento del pezzo.');
       }
 
-    } else {
+    } else if (editData.noleggiato && nuovaQuantita < pezzoOriginale.quantita) {
+  const quantitaRimanente = pezzoOriginale.quantita - nuovaQuantita;
+  const payload = {
+    idOriginale: id,
+    nuovaQuantita: nuovaQuantita,
+    locazioneOriginale: pezzoOriginale.locazione,
+    nuovaLocazione: editData.locazione || pezzoOriginale.locazione, // fallback se non cambiata
+    quantitaRimanente: quantitaRimanente,
+    noleggiato: true,
+    noleggiatoA: editData.noleggiatoA,
+    nome: pezzoOriginale.nome
+  };
+
+  try {
+    const response = await fetch('https://a-lservice-production-39a8.up.railway.app/pezzi-db/noleggia-pezzo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error('Errore nel noleggio');
+
+    const updatedList = await response.json();
+    setPezzi(updatedList);
+    setEditPezzoId(null);
+  } catch (err) {
+    alert('Errore durante il noleggio del pezzo.');
+  }} else {
+
+      
       // Comportamento standard: aggiorna i dati del pezzo
       try {
         const response = await fetch(`https://a-lservice-production-39a8.up.railway.app/pezzi-db/${id}`, {
