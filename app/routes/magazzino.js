@@ -323,7 +323,7 @@ router.put('/pezzi-db/:id', async (req, res) => {
 });
 
 router.post('/pezzi-db/sposta-pezzo', async (req, res) => {
-  const { idOriginale, nuovaQuantita, nuovaLocazione, quantitaRimanente } = req.body;
+  const { idOriginale, nuovaQuantita, nuovaLocazione, quantitaRimanente, noleggiato, noleggiatoA } = req.body;
 
   try {
 
@@ -357,6 +357,7 @@ router.post('/pezzi-db/sposta-pezzo', async (req, res) => {
         quantita: nuovaQuantita,
         locazione: nuovaLocazione,
         noleggiato: pezzoOriginale.noleggiato,
+        noleggiatoA: pezzoOriginale.noleggiatoA,
         creatoDa: username
       };
       await db.collection('pezzi').insertOne(nuovoPezzo);
