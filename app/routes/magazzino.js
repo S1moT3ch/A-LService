@@ -379,7 +379,7 @@ router.post('/pezzi-db/sposta-pezzo', async (req, res) => {
   }
 });
 
-router.post('/noleggia-pezzo', async (req, res) => {
+router.post('/pezzi-db/noleggia-pezzo', async (req, res) => {
   const db = client.db("Magazzino");
   const pezziCollection = db.collection('pezzi');
   const {
