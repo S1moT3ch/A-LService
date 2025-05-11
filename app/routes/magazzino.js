@@ -395,7 +395,7 @@ router.post('/pezzi-db/noleggia-pezzo', async (req, res) => {
   try {
     // 1. Riduci la quantità del pezzo originale
     await pezziCollection.updateOne(
-      { _id: new require('mongodb').ObjectId(idOriginale) },
+      { _id: new ObjectId(idOriginale) },
       { $set: { quantita: quantitaRimanente } }
     );
 
