@@ -39,23 +39,26 @@ router.post('/login', (req, res, next) => {
           
           try {
             nome = JSON.parse(data);
-            res.cookie('username', nome, {
-              maxAge: 3600000, // Tempo di vita del cookie in millisecondi (1 ora in questo caso)
-              httpOnly: false,  // Per impedire che JavaScript acceda al cookie
-              secure: false    // Impostato su true solo se il sito è in HTTPS
-              
+            const username = nome.username;
+
+            res.cookie('username', username, {
+              maxAge: 3600000,
+              httpOnly: false,
+              secure: true,
+              path: '/',
+              sameSite: 'None'
             });
 
-            return res.status(200).json({
+              return res.status(200).json({
               success: true,
               message: 'Login riuscito',
-              username: nome.username
-            });
+              username: username
+              });
 
-          } catch (parseErr) {
-            return res.status(500).json({ success: false, message: 'Errore parsing JSON' });
-          }
-        });
+            } catch (parseErr) {
+              return res.status(500).json({ success: false, message: 'Errore parsing JSON' });
+            }
+          });
       });
     })(req, res, next);
   });
