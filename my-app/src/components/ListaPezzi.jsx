@@ -16,6 +16,7 @@ const ListaPezzi = () => {
   });
   const [locazioni, setLocazioni] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [locazioniAnnidate, setLocazioniAnnidate] = useState({});
 
   useEffect(() => {
       fetch('https://a-lservice-production-39a8.up.railway.app/locazione-db')  // Modifica questo URL con quello del tuo backend
@@ -167,6 +168,23 @@ const ListaPezzi = () => {
   }
 };
 
+const handleClickLocazione = (locazioneNome, idPezzo) => {
+  const pezzoTrovato = pezzi.find(p => p.nome === locazioneNome);
+  if (pezzoTrovato && pezzoTrovato.locazione) {
+    setLocazioniAnnidate(prev => ({
+      ...prev,
+      [idPezzo]: pezzoTrovato.locazione
+    }));
+  } else {
+    // Nasconde se clicchi e non esiste o è già visibile
+    setLocazioniAnnidate(prev => {
+      const copy = { ...prev };
+      delete copy[idPezzo];
+      return copy;
+    });
+  }
+};
+
 
   if (loading) {
     return <div>Caricamento in corso...</div>;  // Messaggio di caricamento
@@ -270,7 +288,22 @@ const ListaPezzi = () => {
               <>
               <td>{p.nome}</td>
               <td>{p.quantita}</td>
-              <td>{p.locazione || 'N/A'}</td>
+              <td>
+                {p.locazione ? (
+                <span
+                  onClick={() => handleClickLocazione(p.locazione, p._id)}
+                  style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
+                  title="Clicca per vedere la locazione annidata"
+                  >
+                  {p.locazione}
+                  </span>
+                  ) : 'N/A'}
+                  {locazioniAnnidate[p._id] && (
+                  <div style={{ marginTop: '4px', fontSize: '0.9em', color: 'gray' }}>
+                    ↳ <strong>{locazioniAnnidate[p._id]}</strong>
+                  </div>
+                  )}
+              </td>
               <td className="th-noleggiato">
                 {p.noleggiato ? (
                 <span style={{ color: 'limegreen', fontWeight: 'bold' }}>
