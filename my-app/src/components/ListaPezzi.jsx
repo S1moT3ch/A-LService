@@ -185,6 +185,12 @@ const handleClickLocazione = (locazioneNome, idPezzo) => {
   }
 };
 
+const locazioniAnnidabili = new Set(
+  pezzi
+    .filter(p => p.locazione && pezzi.some(other => other.nome === p.locazione && other.locazione))
+    .map(p => p.locazione)
+);
+
 
   if (loading) {
     return <div>Caricamento in corso...</div>;  // Messaggio di caricamento
@@ -289,16 +295,18 @@ const handleClickLocazione = (locazioneNome, idPezzo) => {
               <td>{p.nome}</td>
               <td>{p.quantita}</td>
               <td>
-                {p.locazione ? (
+                {locazioniAnnidabili.has(p.locazione) ? (
                 <span
                   onClick={() => handleClickLocazione(p.locazione, p._id)}
                   style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
                   title="Clicca per vedere la locazione annidata"
-                  >
-                  {p.locazione}
-                  </span>
-                  ) : 'N/A'}
-                  {locazioniAnnidate[p._id] && (
+                >
+                {p.locazione}
+                </span>
+                ) : (
+                <span>{p.locazione || 'N/A'}</span>
+                )}
+                {locazioniAnnidate[p._id] && (
                   <div style={{ marginTop: '4px', fontSize: '0.9em', color: 'gray' }}>
                     ↳ <strong>{locazioniAnnidate[p._id]}</strong>
                   </div>
