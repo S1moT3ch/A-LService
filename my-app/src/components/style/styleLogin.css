@@ -82,6 +82,14 @@ input {
   margin-bottom: 5px;
 }*/
 
+.input-fixed {
+  width: 100%;        /* oppure un valore fisso come 250px */
+  max-width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
 .password-wrapper {
   margin-bottom: 0px;
 }
