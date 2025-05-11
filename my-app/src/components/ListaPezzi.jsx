@@ -75,8 +75,8 @@ const ListaPezzi = () => {
 
   const handleUpdate = async (id) => {
   const pezzoOriginale = pezzi.find(p => p._id === id);
-  const nuovaQuantita = parseInt(editData.quantita || 0);
-
+  const quantitaModifica = parseInt(editData.quantitaModifica || pezzoOriginale.quantita);
+  const nuovaQuantita = isNaN(quantitaModifica) ? pezzoOriginale.quantita : quantitaModifica;
   // Verifica se ci sono cambiamenti nei dati
   const nomeDiverso = editData.nome !== pezzoOriginale.nome;
   const quantitaDiversa = nuovaQuantita !== pezzoOriginale.quantita;
@@ -86,7 +86,7 @@ const ListaPezzi = () => {
   // Se ci sono cambiamenti rilevanti (nome, quantità, locazione, noleggio)
   if (nomeDiverso || quantitaDiversa || locazioneDiversa || noleggioDiverso) {
     // Se la locazione è cambiata e la quantità è stata ridotta
-    if (locazioneDiversa && nuovaQuantita < pezzoOriginale.quantita) {
+    if (locazioneDiversa && nuovaQuantita < pezzoOriginale.quantita ) {
       const quantitaRimanente = pezzoOriginale.quantita - nuovaQuantita;
       const payload = {
         idOriginale: id,
