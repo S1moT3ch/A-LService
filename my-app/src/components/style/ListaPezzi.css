@@ -208,3 +208,13 @@ input[type="checkbox"]:disabled {
   color: white;
   width: auto;
 }
+
+.summary-row td {
+  background-color: #f8f8f8;
+  font-style: italic;
+}
+
+.summary-total-global td {
+  font-size: 1.1em;
+  font-weight: bold;
+}

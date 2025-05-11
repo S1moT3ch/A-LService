@@ -90,6 +90,7 @@ const Login = () => {
           <input
             type="text"
             name="username"
+            className="input-fixed"
             value={formData.username}
             onChange={handleChange}
             required
@@ -102,6 +103,7 @@ const Login = () => {
               type={showPassword ? 'text' : 'password'}
               name="password"
               id="pwd"
+              className="input-fixed"
               value={formData.password}
               onChange={handleChange}
               required

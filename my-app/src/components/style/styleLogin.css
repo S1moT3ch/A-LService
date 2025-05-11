@@ -78,9 +78,9 @@ input {
   margin-bottom: 15px;
 }
 
-input[type="password"] {
+/*input[type="password"] {
   margin-bottom: 5px;
-}
+}*/
 
 .password-wrapper {
   margin-bottom: 0px;
