@@ -75,7 +75,7 @@ const ListaPezzi = () => {
 
   const handleUpdate = async (id) => {
   const pezzoOriginale = pezzi.find(p => p._id === id);
-  const nuovaQuantita = parseInt(editData.quantitaModifica || 0);
+  const nuovaQuantita = parseInt(editData.quantita || 0);
 
   // Verifica se ci sono cambiamenti nei dati
   const nomeDiverso = editData.nome !== pezzoOriginale.nome;
