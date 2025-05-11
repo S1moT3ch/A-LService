@@ -86,7 +86,7 @@ const ListaPezzi = () => {
   // Se ci sono cambiamenti rilevanti (nome, quantità, locazione, noleggio)
   if (nomeDiverso || quantitaDiversa || locazioneDiversa || noleggioDiverso) {
     // Se la locazione è cambiata e la quantità è stata ridotta
-    if (locazioneDiversa && nuovaQuantita < pezzoOriginale.quantita || noleggioDiverso) {
+    if (locazioneDiversa && nuovaQuantita < pezzoOriginale.quantita) {
       const quantitaRimanente = pezzoOriginale.quantita - nuovaQuantita;
       const payload = {
         idOriginale: id,
