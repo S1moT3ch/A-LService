@@ -379,4 +379,46 @@ router.post('/pezzi-db/sposta-pezzo', async (req, res) => {
   }
 });
 
+router.post('/noleggia-pezzo', async (req, res) => {
+  const db = client.db("Magazzino");
+  const pezziCollection = db.collection('pezzi');
+  const {
+    idOriginale,
+    nuovaQuantita,
+    locazioneOriginale,
+    nuovaLocazione,
+    quantitaRimanente,
+    noleggiatoA,
+    nome
+  } = req.body;
+
+  try {
+    // 1. Riduci la quantità del pezzo originale
+    await pezziCollection.updateOne(
+      { _id: new require('mongodb').ObjectId(idOriginale) },
+      { $set: { quantita: quantitaRimanente } }
+    );
+
+    // 2. Crea un nuovo pezzo "noleggiato"
+    const nuovoPezzo = {
+      nome,
+      quantita: nuovaQuantita,
+      locazione: nuovaLocazione,
+      noleggiato: true,
+      noleggiatoA
+    };
+
+    await pezziCollection.insertOne(nuovoPezzo);
+
+    // 3. Invia la lista aggiornata
+    const updatedList = await pezziCollection.find().toArray();
+    res.status(200).json(updatedList);
+  } catch (err) {
+    console.error('Errore nel noleggio:', err);
+    res.status(500).json({ message: 'Errore nel noleggio del pezzo' });
+  }
+});
+
+module.exports = router;
+
 module.exports = router;
