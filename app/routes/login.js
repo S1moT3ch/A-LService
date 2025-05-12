@@ -45,8 +45,8 @@ router.post('/login', (req, res, next) => {
               maxAge: 3600000,
               httpOnly: false,
               secure: true,
-              path: '/',
-              sameSite: 'None'
+              sameSite: 'None',
+              path: '/'
             });
 
               return res.status(200).json({
@@ -83,6 +83,15 @@ router.post('/login', (req, res, next) => {
 //router.get('*', (req, res) => {
   //res.render('home');
 //})
+
+router.get('/user-info', (req, res) => {
+  const username = req.cookies.username;
+  if (username) {
+    res.json({ username });
+  } else {
+    res.status(401).json({ error: 'Not authenticated' });
+  }
+});
 
 
 module.exports = router;
