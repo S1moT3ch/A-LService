@@ -10,18 +10,26 @@ const Dashboard = () => {
   const [username, setUsername] = useState(null);
 
   useEffect(() => {
-    const cookieUsername = getCookie('username');
-    if (cookieUsername) {
-      setUsername(cookieUsername);
-    }
-    }, []);
+  const fetchUsername = async () => {
+    try {
+      const response = await fetch('https://a-lservice-production-39a8.up.railway.app/user-info', {
+        method: 'GET',
+        credentials: 'include', // FONDAMENTALE per inviare il cookie
+      });
 
-  const getNomeFromPath = () => {
-    const path = location.pathname;
-    const regex = /\/user\/dashboard\/nome=([^/]+)/;
-    const match = path.match(regex);
-    return match ? decodeURIComponent(match[1]) : null;
+      if (response.ok) {
+        const data = await response.json();
+        setUsername(data.username);
+      } else {
+        console.error('Utente non autenticato');
+      }
+    } catch (error) {
+      console.error('Errore nel recupero dell\'username:', error);
+    }
   };
+
+  fetchUsername();
+}, []);
 
 const Logout = async () => {
   try {
@@ -40,14 +48,6 @@ const Logout = async () => {
   }
 };
 
-function getCookie(name) {
-  const cookies = document.cookie.split('; ');
-  for (let cookie of cookies) {
-    const [key, value] = cookie.split('=');
-    if (key === name) return decodeURIComponent(value);
-  }
-  return null;
-}
 
   //const nomeUtente = getNomeFromPath();
 
