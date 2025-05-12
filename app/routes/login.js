@@ -9,10 +9,6 @@ const fs = require('fs');
 const path = require('path');
 let nome;
 
-app.use(cors({
-  origin: 'https://al-management.vercel.app/',
-  credentials: true,
-}));
 
 router.get('/login', (req, res) => {
     if(req.isAuthenticated()) return res.redirect('/user/dashboard');
