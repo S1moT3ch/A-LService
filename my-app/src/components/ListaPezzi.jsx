@@ -322,8 +322,8 @@ const pezziFiltrati = tabAttiva === 'Globale'
                 )}
               </td>
               <td>
-                <button onClick={() => handleUpdate(p._id)}>💾</button>
-                <button onClick={() => setEditPezzoId(null)}>❌</button>
+                <button className="btn-verde" onClick={() => handleUpdate(p._id)}>💾</button>
+                <button className="btn-blu" onClick={() => setEditPezzoId(null)}>❌</button>
               </td>
               </>
               ) : (
@@ -358,8 +358,8 @@ const pezziFiltrati = tabAttiva === 'Globale'
                 )}
               </td>
               <td>
-                <button onClick={() => startEdit(p)}>✏️</button>
-                <button onClick={() => handleDelete(p._id)}>🗑️</button>
+                <button className="btn-verde" onClick={() => startEdit(p)}>✏️</button>
+                <button className="btn-blu" onClick={() => handleDelete(p._id)}>🗑️</button>
               </td>
               </>
               )}

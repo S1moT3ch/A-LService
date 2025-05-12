@@ -208,16 +208,14 @@ input[type="checkbox"]:disabled {
   opacity: 0.8;
 }
 
-#salva,
-#modifica{
+.btn-verde{
   background-color: #4caf50; /* Salva - verde */
   margin: 6px;
   color: white;
   width: auto;
 }
 
-#annulla,
-#elimina {
+.btn-blu {
   background-color: #b3d3f1; /* Cancella - rosso */
   margin: 6px;
   color: white;
