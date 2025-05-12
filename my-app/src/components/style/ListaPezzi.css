@@ -208,22 +208,17 @@ input[type="checkbox"]:disabled {
   opacity: 0.8;
 }
 
-.lista-container button:nth-child(1) {
+#salva,
+#modifica{
   background-color: #4caf50; /* Salva - verde */
   margin: 6px;
   color: white;
   width: auto;
 }
 
-.lista-container button:nth-child(2) {
+#annulla,
+#elimina {
   background-color: #b3d3f1; /* Cancella - rosso */
-  margin: 6px;
-  color: white;
-  width: auto;
-}
-
-.lista-container button:nth-child(3) {
-  background-color: #1909aa; /* Modifica - blu */
   margin: 6px;
   color: white;
   width: auto;
