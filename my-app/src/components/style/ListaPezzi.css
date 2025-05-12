@@ -48,11 +48,11 @@
   display: flex;
   gap: 10px;
   margin-bottom: 16px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .tab-bar button {
-  background: #0d10bb;
+  background: #6a6ce6;
   border: 1px solid #ccc;
   padding: 6px 12px;
   cursor: pointer;
@@ -195,7 +195,6 @@ input[type="checkbox"]:disabled {
 }
 
 .lista-container button {
-  display: flex;
   margin: 0 2px;
   padding: 6px 10px;
   font-size: 14px;
@@ -203,10 +202,12 @@ input[type="checkbox"]:disabled {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: auto;
 }
 
 .lista-container button:hover {
   opacity: 0.8;
+  background: #0d10bb;
 }
 
 .btn-verde{
