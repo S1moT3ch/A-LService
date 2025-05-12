@@ -211,26 +211,6 @@ const pezziFiltrati = tabAttiva === 'Globale'
   ? pezzi
   : pezzi.filter(p => (p.locazione || 'Nessuna locazione') === tabAttiva);
 
-// UI delle schede
-<div className="tab-bar">
-  <button
-    className={tabAttiva === 'Globale' ? 'active-tab' : ''}
-    onClick={() => setTabAttiva('Globale')}
-  >
-    Tutti i pezzi
-  </button>
-  {locazioniUniche.map(loc => (
-    <button
-      key={loc}
-      className={tabAttiva === loc ? 'active-tab' : ''}
-      onClick={() => setTabAttiva(loc)}
-    >
-      📦 {loc}
-    </button>
-  ))}
-</div>
-
-
   if (loading) {
     return <div>Caricamento in corso...</div>;  // Messaggio di caricamento
   }
@@ -249,6 +229,23 @@ const pezziFiltrati = tabAttiva === 'Globale'
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         />
+      </div>
+      <div className="tab-bar">
+        <button
+          className={tabAttiva === 'Globale' ? 'active-tab' : ''}
+          onClick={() => setTabAttiva('Globale')}
+          >
+          Tutti i pezzi
+        </button>
+        {locazioniUniche.map(loc => (
+          <button
+            key={loc}
+            className={tabAttiva === loc ? 'active-tab' : ''}
+            onClick={() => setTabAttiva(loc)}
+            >
+            📦 {loc}
+          </button>
+          ))}
       </div>
       <table>
         <thead>
