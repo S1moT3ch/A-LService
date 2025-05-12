@@ -44,7 +44,7 @@ router.post('/login', (req, res, next) => {
             res.cookie('username', username, {
               maxAge: 3600000,
               httpOnly: false,
-              secure: true,
+              secure: false,
               path: '/',
               sameSite: 'None'
             });
