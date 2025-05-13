@@ -62,7 +62,9 @@ const MagazzinoPage = () => {
 
         {/* Menu laterale destro */}
         {(menuOpen || isClosing) && (
-        <div className={`menu-container ${menuOpen && !isClosing ? 'slide-in' : 'slide-out'}`}>
+        <div className={`menu-container ${menuOpen && !isClosing ? 'slide-in' : 'slide-out'}`}
+        style={{ display: menuOpen || isClosing ? 'block' : 'none' }} // evita smontaggio DOM
+        >
           <button
             onClick={handleToggleMenu}
             className="hamburger"
