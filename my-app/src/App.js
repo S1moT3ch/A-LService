@@ -36,25 +36,25 @@ const MagazzinoPage = () => {
     <div className="max-w-4xl mx-auto">
       <div className="header">
         <img src="/images/Logo_full.png" alt="Logo AL" className="logo" />
-          <h1 className="caption">Gestionale di A&L</h1>
-          <div className="relative">
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="text-cyan-500 hover:text-cyan-300 focus:outline-none"
-            >
-              <MenuIcon fontSize="large" />
-            </button>
+        <h1 className="caption">Gestionale di A&L</h1>
+        <div className="relative">
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="text-cyan-500 hover:text-cyan-300 focus:outline-none"
+          >
+          <MenuIcon fontSize="large" />
+        </button>
 
-            {menuOpen && (
-              <div className="absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                <MenuComponent />
-              </div>
-              )}
+        {menuOpen && (
+          <div className="menu-container">
+            <MenuComponent />
           </div>
-          </div>
-          <div class="intro">
-            <h3>Magazzino di Acoustic&Light</h3>
-          </div>
+          )}
+        </div>
+      </div>
+      <div class="intro">
+        <h3>Magazzino di Acoustic&Light</h3>
+      </div>
         
     
     

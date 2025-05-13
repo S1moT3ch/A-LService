@@ -107,3 +107,42 @@
     background-color: #2980b9;
     transform: translateY(-2px);
 }
+
+/* Stili generali */
+.header {
+  position: relative;
+}
+
+.menu-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px; /* Puoi cambiare questa larghezza a seconda delle tue preferenze */
+  height: 100%;
+  background-color: white;
+  border-left: 1px solid #ccc;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  animation: slideInRight 0.3s ease-out;
+}
+
+/* Animazione del menu a tendina */
+@keyframes slideInRight {
+  from {
+    right: -250px;
+  }
+  to {
+    right: 0;
+  }
+}
+
+/* Stili per il contenuto del menu */
+.menu-container .menu-item {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.menu-container .menu-item:hover {
+  background-color: #f0f0f0;
+}
