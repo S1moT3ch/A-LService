@@ -117,16 +117,16 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 250px; /* Puoi cambiare questa larghezza a seconda delle tue preferenze */
+  width: 250px;
   height: 100%;
-  background-color: white;
+  background-color: rgb(40, 235, 72);
   border-left: 1px solid #ccc;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-  z-index: 50;
+  box-shadow: -2px 0 5px rgb(7, 53, 3);
+  z-index: 40;
   animation: slideInRight 0.3s ease-out;
+  padding-top: 60px; /* Spazio per evitare che il menu copra il bottone */
 }
 
-/* Animazione del menu a tendina */
 @keyframes slideInRight {
   from {
     right: -250px;
