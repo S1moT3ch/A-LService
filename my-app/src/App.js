@@ -48,32 +48,24 @@ const MagazzinoPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="header">
-        <img src="/images/Logo_full.png" alt="Logo AL" className="logo" />
-        <h1 className="caption">Gestionale di A&L</h1>
+    <div className="header">
+      <img src="/images/Logo_full.png" alt="Logo AL" className="logo" />
+      <h1 className="caption">Gestionale di A&L</h1>
 
-        {/* Bottone hamburger sempre visibile, fisso in alto a destra */}
-        <button
-          onClick={handleToggleMenu}
-          className="hamburger"
-        >
+      <button onClick={handleToggleMenu} className="hamburger">
+        {menuOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
+      </button>
+
+      {/* Menu laterale */}
+      <div
+        className={`menu-container ${menuOpen && !isClosing ? 'slide-in' : 'slide-out'}`}
+        style={{ display: menuOpen || isClosing ? 'block' : 'none' }} // evita smontaggio DOM
+      >
+        <button onClick={handleToggleMenu} className="hamburger">
           {menuOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
         </button>
-
-        {/* Menu laterale destro */}
-        {(menuOpen || isClosing) && (
-        <div className={`menu-container ${menuOpen && !isClosing ? 'slide-in' : 'slide-out'}`}
-        style={{ display: menuOpen || isClosing ? 'block' : 'none' }} // evita smontaggio DOM
-        >
-          <button
-            onClick={handleToggleMenu}
-            className="hamburger"
-            >
-            {menuOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
-          </button>
-          <MenuComponent />
-        </div>
-        )}
+        <MenuComponent />
+      </div>
     </div>
     <div class="intro">
       <h3>Magazzino di Acoustic&Light</h3>
