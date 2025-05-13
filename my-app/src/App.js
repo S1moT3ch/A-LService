@@ -29,12 +29,12 @@ const MagazzinoPage = () => {
   const [refreshLoc, setRefreshLoc] = useState(false);
   return (
     <div className="max-w-4xl mx-auto">
-      <div class="barra">
-      <p1>Gestionale di A&L</p1>
-    </div>
-    <div className="header">
+      <div className="header">
         <img src="/images/Logo_full.png" alt="Logo AL" className="logo" />
         <h1 className="caption">Gestionale di A&L</h1>
+      </div>
+    <div class="intro">
+      <h3>Magazzino di Acoustic&Light</h3>
     </div>
     
     {/* LOCATIONS */}

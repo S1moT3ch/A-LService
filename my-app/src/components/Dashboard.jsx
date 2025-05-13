@@ -57,8 +57,9 @@ const Logout = async () => {
         <title>A&LService-Management</title>
         <link rel="icon" type="image/vnd.icon" href="/images/LogoAl.ico" />
       </head>
-      <div className="barra">
-        <p>Gestionale di A&amp;L</p>
+      <div className="header">
+        <img src="/images/Logo_full.png" alt="Logo AL" className="logo" />
+        <h1 className="caption">Gestionale di A&L</h1>
       </div>
 
       <div className="benvenuto">
