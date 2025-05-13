@@ -33,18 +33,36 @@ const MagazzinoPage = () => {
   const [refreshLoc, setRefreshLoc] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false); // controlla montaggio DOM
+  const menuRef = useRef(null);
 
-  const handleToggleMenu = () => {
-  if (menuOpen) {
-    setIsClosing(true);
-    setTimeout(() => {
-      setMenuOpen(false);
-      setIsClosing(false);
-    }, 300); // deve combaciare col transition time
-  } else {
+  const handleOpenMenu = () => {
+    setMenuVisible(true); // monta il div
+
+    // Attendi che il DOM si aggiorni, poi applica la slide-in
+    requestAnimationFrame(() => {
+      if (menuRef.current) {
+        menuRef.current.classList.remove("slide-out");
+        menuRef.current.classList.add("slide-in");
+      }
+    });
+
     setMenuOpen(true);
-  }
-};
+  };
+
+    const handleCloseMenu = () => {
+    if (menuRef.current) {
+      menuRef.current.classList.remove("slide-in");
+      menuRef.current.classList.add("slide-out");
+    }
+
+    setMenuOpen(false);
+
+    // Rimuovi dal DOM dopo l'animazione
+    setTimeout(() => {
+      setMenuVisible(false);
+    }, 300); // deve combaciare col transition CSS
+  };
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -52,20 +70,21 @@ const MagazzinoPage = () => {
       <img src="/images/Logo_full.png" alt="Logo AL" className="logo" />
       <h1 className="caption">Gestionale di A&L</h1>
 
-      <button onClick={handleToggleMenu} className="hamburger">
+      <button onClick={menuOpen ? handleCloseMenu : handleOpenMenu} className="hamburger">
         {menuOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
       </button>
 
       {/* Menu laterale */}
-      <div
-        className={`menu-container ${menuOpen && !isClosing ? 'slide-in' : 'slide-out'}`}
-        style={{ display: menuOpen || isClosing ? 'block' : 'none' }} // evita smontaggio DOM
-      >
-        <button onClick={handleToggleMenu} className="hamburger">
-          {menuOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
+      {menuVisible && (
+      <div ref={menuRef} className="menu-container slide-out">
+        <button onClick={handleCloseMenu} className="hamburger">
+          <CloseIcon fontSize="large" />
         </button>
+        <div>
         <MenuComponent />
+        </div>
       </div>
+      )}
     </div>
     <div class="intro">
       <h3>Magazzino di Acoustic&Light</h3>
