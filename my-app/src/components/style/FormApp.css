@@ -117,6 +117,7 @@
   background-color: transparent;
   border: none;
   color: #ffffff;
+  width: auto;
 }
 
 .hamburger:hover{
@@ -129,21 +130,22 @@
   right: 0;
   width: 250px;
   height: 100%;
-  background-color: rgb(40, 235, 72);
-  border-left: 1px solid #ccc;
-  box-shadow: -2px 0 5px rgb(7, 53, 3);
+  background-color: #76d285;
+  box-shadow: -2px 0 5px #246a1e;
   z-index: 40;
-  animation: slideInRight 0.3s ease-out;
-  padding-top: 60px; /* Spazio per evitare che il menu copra il bottone */
+  padding-top: 60px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-out;
 }
 
-@keyframes slideInRight {
-  from {
-    right: -250px;
-  }
-  to {
-    right: 0;
-  }
+/* Quando il menu è visibile (entra) */
+.menu-container.slide-in {
+  transform: translateX(0%);
+}
+
+/* Quando il menu esce */
+.menu-container.slide-out {
+  transform: translateX(100%);
 }
 
 /* Stili per il contenuto del menu */

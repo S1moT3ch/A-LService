@@ -17,7 +17,6 @@ body {
   justify-content: space-between;
   align-items: center;
   background-color: #4fdada;
-  padding: 0 2rem;
   height: 10vh;
   position: relative; /* utile se si vogliono elementi posizionati assolutamente */
 }

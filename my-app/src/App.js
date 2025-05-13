@@ -32,6 +32,19 @@ const MagazzinoPage = () => {
   const [refresh, setRefresh] = useState(false);
   const [refreshLoc, setRefreshLoc] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleToggleMenu = () => {
+  if (menuOpen) {
+    setIsClosing(true);
+    setTimeout(() => {
+      setMenuOpen(false);
+      setIsClosing(false);
+    }, 300); // deve combaciare col transition time
+  } else {
+    setMenuOpen(true);
+  }
+};
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -48,8 +61,8 @@ const MagazzinoPage = () => {
         </button>
 
         {/* Menu laterale destro */}
-        {menuOpen && (
-        <div className="menu-container">
+        {(menuOpen || isClosing) && (
+        <div className={`menu-container ${menuOpen && !isClosing ? 'slide-in' : 'slide-out'}`}>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="hamburger"
