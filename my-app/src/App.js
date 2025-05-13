@@ -33,7 +33,7 @@ const MagazzinoPage = () => {
       <p1>Gestionale di A&L</p1>
     </div>
     <div class="intro">
-      <h1>Magazzino di Acoustic&Light</h1>
+      <h3>Magazzino di Acoustic&Light</h3>
     </div>
     
     {/* LOCATIONS */}
