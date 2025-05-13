@@ -12,6 +12,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from "@mui/icons-material/Close";
 import MenuComponent from './components/MenuComponent';
 
 import ListaPezzi from './components/ListaPezzi';
@@ -37,24 +38,31 @@ const MagazzinoPage = () => {
       <div className="header">
         <img src="/images/Logo_full.png" alt="Logo AL" className="logo" />
         <h1 className="caption">Gestionale di A&L</h1>
-        <div className="relative">
+
+        {/* Bottone hamburger sempre visibile, fisso in alto a destra */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="text-cyan-500 hover:text-cyan-300 focus:outline-none"
+          className="fixed top-4 right-4 z-50 text-cyan-500 hover:text-cyan-300 focus:outline-none"
           >
-          <MenuIcon fontSize="large" />
+          {menuOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
         </button>
 
+        {/* Menu laterale destro */}
         {menuOpen && (
-          <div className="menu-container">
-            <MenuComponent />
-          </div>
-          )}
+        <div className="menu-container">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="fixed top-4 right-4 z-50 text-cyan-500 hover:text-cyan-300 focus:outline-none"
+            >
+            {menuOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
+          </button>
+          <MenuComponent />
         </div>
-      </div>
-      <div class="intro">
-        <h3>Magazzino di Acoustic&Light</h3>
-      </div>
+        )}
+    </div>
+    <div class="intro">
+      <h3>Magazzino di Acoustic&Light</h3>
+    </div>
         
     
     
