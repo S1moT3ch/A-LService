@@ -54,9 +54,9 @@ const MagazzinoPage = () => {
 
         {/* Bottone hamburger sempre visibile, fisso in alto a destra */}
         <button
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={handleToggleMenu}
           className="hamburger"
-          >
+        >
           {menuOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
         </button>
 
