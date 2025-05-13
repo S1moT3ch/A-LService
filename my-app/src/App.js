@@ -32,8 +32,9 @@ const MagazzinoPage = () => {
       <div class="barra">
       <p1>Gestionale di A&L</p1>
     </div>
-    <div class="intro">
-      <h3>Magazzino di Acoustic&Light</h3>
+    <div className="header">
+        <img src="/images/Logo_full.png" alt="Logo AL" className="logo" />
+        <h1 className="caption">Gestionale di A&L</h1>
     </div>
     
     {/* LOCATIONS */}
