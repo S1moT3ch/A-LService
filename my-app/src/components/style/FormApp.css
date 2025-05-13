@@ -134,6 +134,7 @@
   box-shadow: -2px 0 5px #246a1e;
   z-index: 100;
   transition: transform 0.3s ease-in-out;
+  transform: translateX(100%); /* posizione iniziale offscreen */
 }
 
 .slide-in {
