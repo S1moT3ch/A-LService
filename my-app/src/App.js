@@ -11,6 +11,9 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuComponent from './components/MenuComponent';
+
 import ListaPezzi from './components/ListaPezzi';
 import FormPezzo from './components/FormPezzo';
 import FormLocazione from './components/FormLocazione';
@@ -27,15 +30,32 @@ const MagazzinoPage = () => {
   const [showLoc, setShowLoc] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [refreshLoc, setRefreshLoc] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="header">
         <img src="/images/Logo_full.png" alt="Logo AL" className="logo" />
-        <h1 className="caption">Gestionale di A&L</h1>
+          <h1 className="caption">Gestionale di A&L</h1>
+        </div>
+        <div class="intro">
+          <h3>Magazzino di Acoustic&Light</h3>
+        </div>
+        <div className="relative">
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="text-cyan-500 hover:text-cyan-300 focus:outline-none"
+        >
+          <MenuIcon fontSize="large" />
+        </button>
+
+        {menuOpen && (
+          <div className="absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+            <MenuComponent />
+          </div>
+        )}
       </div>
-    <div class="intro">
-      <h3>Magazzino di Acoustic&Light</h3>
-    </div>
+    
     
     {/* LOCATIONS */}
     <hr />
