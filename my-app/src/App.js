@@ -7,7 +7,7 @@ import {
 import React, { useState } from 'react';
 import PrivateRoute from './components/PrivateRoute';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, } from "react";
 
 import Home from './components/Home';
 import Login from './components/Login';
