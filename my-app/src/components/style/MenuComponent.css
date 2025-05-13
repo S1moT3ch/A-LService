@@ -1,0 +1,22 @@
+.btn-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button.btn-navbar {
+    background: transparent;
+}
+
+button.btn-navbar :hover {
+    background-color: #55bbbb ;
+}
+
+button.btn-logout {
+    width: auto;
+    background-color: #d71821;
+}
+
+button.btn-logout:hover {
+    background-color: #e30707;
+}

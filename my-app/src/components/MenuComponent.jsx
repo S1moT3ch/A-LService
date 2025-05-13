@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
+import './components/style/MenuComponent.css';
 
 const MenuComponent = () => {
   const navigate = useNavigate();
@@ -22,15 +23,15 @@ const MenuComponent = () => {
   };
 
   return (
-    <div className="flex flex-col p-2">
+    <div className="btn-column">
       <Link to="/user/dashboard/magazzino">
-        <button className="py-2 px-4 hover:bg-gray-100 text-left w-full">
+        <button className="btn-navbar">
           Gestisci il magazzino
         </button>
       </Link>
       <button
         onClick={handleLogout}
-        className="py-2 px-4 hover:bg-red-100 text-left text-red-600 w-full"
+        className="btn-logout"
       >
         Logout
       </button>
