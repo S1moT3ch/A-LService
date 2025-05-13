@@ -64,7 +64,7 @@ const MagazzinoPage = () => {
         {(menuOpen || isClosing) && (
         <div className={`menu-container ${menuOpen && !isClosing ? 'slide-in' : 'slide-out'}`}>
           <button
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={handleToggleMenu}
             className="hamburger"
             >
             {menuOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
