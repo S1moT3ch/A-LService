@@ -113,6 +113,16 @@
   position: relative;
 }
 
+.hamburger{
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+}
+
+.hamburger:hover{
+  background-color: transparent;
+}
+
 .menu-container {
   position: fixed;
   top: 0;

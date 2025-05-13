@@ -42,7 +42,7 @@ const MagazzinoPage = () => {
         {/* Bottone hamburger sempre visibile, fisso in alto a destra */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="fixed top-4 right-4 z-50 text-cyan-500 hover:text-cyan-300 focus:outline-none"
+          className="hamburger"
           >
           {menuOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
         </button>
@@ -52,7 +52,7 @@ const MagazzinoPage = () => {
         <div className="menu-container">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="fixed top-4 right-4 z-50 text-cyan-500 hover:text-cyan-300 focus:outline-none"
+            className="hamburger"
             >
             {menuOpen ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
           </button>
