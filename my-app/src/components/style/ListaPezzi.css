@@ -52,7 +52,7 @@
 }
 
 .tab-bar button {
-  background: #6a6ce6;
+  background: #7aa3c5;
   border: 1px solid #ccc;
   padding: 6px 12px;
   cursor: pointer;
@@ -61,7 +61,7 @@
 }
 
 .tab-bar button:hover {
-  background: #ddd;
+  background: #4b95d1;
 }
   
   /* Table styles */
@@ -207,7 +207,6 @@ input[type="checkbox"]:disabled {
 
 .lista-container button:hover {
   opacity: 0.8;
-  background: #0d10bb;
 }
 
 .btn-verde{
