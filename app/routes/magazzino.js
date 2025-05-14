@@ -420,5 +420,3 @@ router.post('/pezzi-db/noleggia-pezzo', async (req, res) => {
 });
 
 module.exports = router;
-
-module.exports = router;
