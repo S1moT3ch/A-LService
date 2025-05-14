@@ -8,6 +8,11 @@ const PrivateRoute = ({ children }) => {
     const checkAuth = async () => {
       try {
         const res = await fetch('https://a-lservice-production-39a8.up.railway.app/api/check-auth', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }, // 'token' è il tuo JWT
+  
           credentials: 'include',
         });
 

@@ -10,6 +10,25 @@ const fs = require('fs');
 const path = require('path');
 let nome;
 
+// Middleware per verificare il token JWT
+const verifyToken = (req, res, next) => {
+  // Verifica il token nell'intestazione Authorization (formato Bearer <token>)
+  const token = req.headers['authorization']?.split(' ')[1]; // "Bearer <token>"
+
+  if (!token) {
+    return res.status(401).json({ success: false, message: 'Token mancante o non valido' });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ success: false, message: 'Token non valido' });
+    }
+
+    // Aggiungi i dati decodificati alla richiesta per le rotte successive
+    req.user = decoded;
+    next();
+  });
+};
 
 router.get('/login', (req, res) => {
     if(req.isAuthenticated()) return res.redirect('/user/dashboard');
@@ -89,13 +108,13 @@ router.post('/login', (req, res, next) => {
   });
 
 
-  router.get('/api/check-auth', (req, res) => {
-    if (req.isAuthenticated()) {
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(401);
-    }
+  router.get('/api/check-auth', verifyToken, (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Utente autenticato',
+    user: req.user // I dati decodificati dal token (come id, username, ecc.)
   });
+});
 
 //router.get('*', (req, res) => {
   //res.render('home');
