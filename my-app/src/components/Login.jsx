@@ -55,6 +55,7 @@ const Login = () => {
       const result = await response.json();
 
       if (response.ok && result.success) {
+        localStorage.setItem('token', result.token);
         setShowError(false);
         navigate('/user/dashboard/');
       } else {

@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 
 const PrivateRoute = ({ children }) => {
   const [auth, setAuth] = useState(null); // null = loading, false = no auth, true = ok
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const checkAuth = async () => {
