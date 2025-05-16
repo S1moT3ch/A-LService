@@ -108,12 +108,12 @@ router.post('/login', (req, res, next) => {
   });
 
 
-  router.get('/api/check-auth', verifyToken, (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'Utente autenticato',
-    user: req.user // I dati decodificati dal token (come id, username, ecc.)
-  });
+router.get('/api/check-auth', (req, res) => {
+    if (req.isAuthenticated()) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(401);
+    }
 });
 
 //router.get('*', (req, res) => {
