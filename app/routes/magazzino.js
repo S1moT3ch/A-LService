@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 app.use(express.json());
 const router = express.Router();
+router.use(cookieParser());
 const PezzoDB = require('../config/pezzoModel');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -416,6 +417,34 @@ router.post('/pezzi-db/noleggia-pezzo', async (req, res) => {
   } catch (err) {
     console.error('Errore nel noleggio:', err);
     res.status(500).json({ message: 'Errore nel noleggio del pezzo' });
+  }
+});
+
+router.get('/whoisuser', async (req, res) => {
+  const username = req.cookies.username;
+
+  if (!username) {
+    return res.status(400).json({ error: 'Cookie username mancante' });
+  }
+
+  try {
+    await client.connect();
+    const db = client.db('ACSAHomeConnect');
+    const userCollection = db.collection('user');
+
+    const user = await userCollection.findOne(
+      { username: username },
+      { projection: { _id: 0, username: 1, cognome: 1, ruolo: 1 } }
+    );
+
+    if (!user) {
+      return res.status(404).json({ error: 'Utente non trovato' });
+    }
+
+    res.status(200).json({ user });
+  } catch (err) {
+    console.error('Errore durante la ricerca utente:', err);
+    res.status(500).json({ error: 'Errore server' });
   }
 });
 

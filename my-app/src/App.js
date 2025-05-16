@@ -16,6 +16,7 @@ import Dashboard from './components/Dashboard';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from "@mui/icons-material/Close";
 import MenuComponent from './components/MenuComponent';
+import UserComponent from './components/UserComponent';
 
 import ListaPezzi from './components/ListaPezzi';
 import FormPezzo from './components/FormPezzo';
@@ -83,6 +84,7 @@ const MagazzinoPage = () => {
           <CloseIcon fontSize="large" />
         </button>
         <div>
+        <UserComponent />
         <MenuComponent />
         </div>
       </div>
