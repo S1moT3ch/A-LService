@@ -3,12 +3,11 @@ import { Navigate } from 'react-router-dom';
 
 const PrivateRoute = ({ children }) => {
   const [auth, setAuth] = useState(null); // null = loading, false = no auth, true = ok
-  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-          const res = await fetch('https://a-lservice-production-39a8.up.railway.app/api/check-auth', {
+        const res = await fetch('https://a-lservice-production-39a8.up.railway.app/api/check-auth', {
           credentials: 'include',
         });
 
