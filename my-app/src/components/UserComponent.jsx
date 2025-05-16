@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import './style/UserComponent.css';
 
 const UserComponent = () => {
   const [user, setUser] = useState(null);
@@ -29,6 +30,7 @@ const UserComponent = () => {
     <div className="btn-column">
       {user ? (
         <div className="user-info">
+          <p>Riepilogo utente loggato</p>
           <p><strong>Username:</strong> {user.username}</p>
           <p><strong>Cognome:</strong> {user.cognome}</p>
           <p><strong>Ruolo:</strong> {user.ruolo}</p>
